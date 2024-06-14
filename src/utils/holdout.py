@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from typing import Tuple, List
+import seaborn as sns
 
 class HoldOut:
     def __init__(self, csv_path: str, val_size: float, test_size: float, output_dir: str = './data/holdout') -> None:
@@ -76,8 +77,39 @@ class HoldOut:
 
         plt.savefig('./figures/lesion_distribution.png')
 
+    def generate_heatmap(self) -> None:
+        os.makedirs('./figures', exist_ok=True)
+        
+        # Concatenar los datos de train, val y test para crear el heatmap
+        data_splits = ['train', 'val', 'test']
+        frames = []
+        for split in data_splits:
+            df_split = pd.read_csv(os.path.join(self.output_dir, f"{split}.csv"))
+            df_split['split'] = split
+            frames.append(df_split)
+        df_all = pd.concat(frames)
+        
+        # Contar las ocurrencias de cada combinación split-LesionLabel
+        heatmap_data = df_all.pivot_table(index='LesionLabel', columns='split', aggfunc='size', fill_value=0)
+        
+        # Crear el heatmap con las distribuciones marginales
+        sns.set_theme(style="white")
+        plt.figure(figsize=(12, 8))
+        
+        # Heatmap
+        sns.heatmap(heatmap_data, cmap="YlGnBu", cbar=True, annot=True, fmt="d")
+        
+        plt.title('Distribución de Lesion Labels en Splits de Datos')
+        plt.xlabel('Splits')
+        plt.ylabel('Lesion Labels')
+        
+        # Guardar el heatmap
+        plt.savefig('./figures/lesion_heatmap.png')
+        plt.close()
+
     def process(self, labels: List[str]) -> None:
         filtered_df = self.filter_labels(labels)
         train_df, val_df, test_df = self.split_data(filtered_df)
         self.save_splits(train_df, val_df, test_df)
         self.generate_plots()
+        self.generate_heatmap()
