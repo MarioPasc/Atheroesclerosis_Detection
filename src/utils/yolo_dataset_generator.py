@@ -5,6 +5,8 @@ from typing import Optional
 from tqdm import tqdm 
 
 class DatasetGenerator:
+    """
+    # Estos class mappings solo podrán ser usados cuando se entrene el modelo con todas las clases
     class_mappings = {
         "p0_20": 0,
         "p20_50": 1,
@@ -14,7 +16,13 @@ class DatasetGenerator:
         "p99": 5,
         "p100": 6
     }
-
+    """
+    class_mappings = {
+        "p70_90": 0,
+        "p90_98": 1,
+        "p99": 2,
+        "p100": 3
+    }
     def __init__(self, train_csv: str, val_csv: str, test_csv: str, dataset_dir: str):
         """
         Initialize the DatasetGenerator with paths to the CSV files and the output directory.
@@ -29,6 +37,8 @@ class DatasetGenerator:
         self.test_csv = test_csv
         self.dataset_dir = dataset_dir
         
+        os.makedirs(self.dataset_dir, exist_ok=True)
+
         # Read the CSV files
         self.train_df = pd.read_csv(train_csv)
         self.val_df = pd.read_csv(val_csv)
