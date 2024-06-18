@@ -4,10 +4,7 @@ val: images/val
 test:  images/test
 
 names:
-  0: p0_20
-  1: p20_50
-  2: p50_70
-  3: p70_90
-  4: p90_98
-  5: p99
-  6: p100
+  0: p70_90
+  1: p90_98
+  2: p99
+  3: p100
