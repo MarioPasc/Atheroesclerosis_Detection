@@ -38,13 +38,13 @@ names:
   6: p100
 ```
 
-![Figura 1](/home/mariopasc/Python/Results/Coronariografias/Entrenamiento1706/results.png)
+![Figura 1](figures/results.png)
 
 La imgen superior contiene los resultados del entrenamiento realizado con el fichero yaml adjuntado. Como se puede observar los resultados de precisión pueden ser buenos, lo que denota una capacidad notable del modelo para detectar la lesión, sin embargo, el recall es bajo, indicando que el modelo no clasifica bien una lesión cuando la detecta
 
-![Figura 2](/home/mariopasc/Python/Results/Coronariografias/Entrenamiento1706/train_batch1.jpg)
+![Figura 2](figures/train_batch1.jpg)
 
-La imagen superior muestra una visualización de los labels predichos de uno de los batch de entrenamiento. No hay imágenes con p0_20 en el conjunto de datos, lo que indica que el modelo no clasifica bien las lesiones.
+La imagen superior muestra una visualización de los labels predecidos de uno de los batch de entrenamiento. No hay imágenes con p0_20 en el conjunto de datos, lo que indica que el modelo no clasifica bien las lesiones.
 
 - Se ha realizado un entrenamiento con un fichero `.yaml` con el formato adjunto inferiormente, como se puede observar, sin incluir las etiquetas con las que no se va a evaluar el modelo.
 
@@ -60,3 +60,16 @@ names:
   2: p99
   3: p100
 ```
+
+Los resultados de este entrenamiento son los siguientes:
+
+![Figura 3](../data/results/week1/baseline_reduced_labels/val_batch0_pred.jpg)
+
+![Figura 4](../data/results/week1/baseline_reduced_labels/results.png)
+
+![Figura 5](../data/results/week1/baseline_reduced_labels/labels.jpg)
+
+
+Como se puede observar, la precisión y el recall han aumentado, sin embargo, el modelo parece tener problemas detectando las lesiones con menos muestras, ya que solo ha clasificado las lesiones p70_90, que, como se puede observar según la gráfica dada por el modelo, es el único tipo de lesiones que se han podido detectar. 
+
+Si bien la detección ha mejorado, el siguiente paso sería aplicar un algoritmo de aumentación de datos a las clases minoritarias para balancearlas todas, todo sin que la cantidad de muestras totales de frames con lesión supere a las de frames sin lesión. 
