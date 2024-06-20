@@ -8,7 +8,7 @@ The dataset is split into training, validation, and test sets, with correspondin
 
 
 <p align="center">
-  <img src="figures/informative/train_batch1.jpg" width="600" title="Peek">
+  <img src="data/results/week1/baseline_reduced_labels/val_batch2_labels.jpg" width="600" title="Peek">
 </p>
 
 ## References

@@ -69,7 +69,6 @@ Los resultados de este entrenamiento son los siguientes:
 
 ![Figura 5](../data/results/week1/baseline_reduced_labels/labels.jpg)
 
+Como se puede observar, la precisión y el recall han aumentado, sin embargo, el modelo parece tener problemas detectando las lesiones con menos muestras, ya que solo ha clasificado las lesiones p70_90, que, como se puede observar según la gráfica dada por el modelo, es el único tipo de lesiones que se han podido detectar.
 
-Como se puede observar, la precisión y el recall han aumentado, sin embargo, el modelo parece tener problemas detectando las lesiones con menos muestras, ya que solo ha clasificado las lesiones p70_90, que, como se puede observar según la gráfica dada por el modelo, es el único tipo de lesiones que se han podido detectar. 
-
-Si bien la detección ha mejorado, el siguiente paso sería aplicar un algoritmo de aumentación de datos a las clases minoritarias para balancearlas todas, todo sin que la cantidad de muestras totales de frames con lesión supere a las de frames sin lesión. 
+Si bien la detección ha mejorado, el siguiente paso sería aplicar un algoritmo de aumentación de datos a las clases minoritarias para balancearlas todas, todo sin que la cantidad de muestras totales de frames con lesión supere a las de frames sin lesión.
