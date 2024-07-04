@@ -72,8 +72,8 @@ class DatasetAnalyzer:
         plt.close()
 
 # Usage
-train_path = './data/holdout/train.csv'
-augmented_train_path = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented/augmented_train.csv'
+train_path = './data/holdout/val.csv'
+augmented_train_path = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented/augmented_val.csv'
 
 analyzer = DatasetAnalyzer(train_path, augmented_train_path)
 analyzer.compare_lesion_counts()
