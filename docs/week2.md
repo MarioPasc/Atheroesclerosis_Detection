@@ -19,7 +19,5 @@
 - Se ha introducido un factor 2 a 1 la cantidad de imágenes con lesión, para poder tener una mejor representación de la clase minoritaria. 
 - Se ha aumentado el brillo y contraste de las imágenes con lesión. Generando nuevos nombres. 
 - Una misma imagen puede ser aumentada por veces por el mismo método. Por ello, se ha añadido un número secuencial al nombre. 
-
-Cosas a hacer:
-- Indexar la cantidad de instancias de cada clase en lesión para favorecer al label minoritario.
-- Introducir nuevos tipos de aumentación espacial. 
+- Se ha indexado la cantidad de imágenes con lesión generadas artificialmente por label de tal forma que se beneficia mucho más a las clases con menos instancias que a las con más.
+- Se han organizado los resultados en una estructura de ficheros que permite comprobar de manera eficiente alguna fuga de datos indeseada. 
