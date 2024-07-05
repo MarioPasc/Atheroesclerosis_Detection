@@ -1,4 +1,4 @@
-# Progresión Semana 2: 1/07 - 6/07
+# Progresión Semana 2: 1/07 - 5/07
 
 ## Objetivos de la semana
 
@@ -21,3 +21,25 @@
 - Una misma imagen puede ser aumentada por veces por el mismo método. Por ello, se ha añadido un número secuencial al nombre. 
 - Se ha indexado la cantidad de imágenes con lesión generadas artificialmente por label de tal forma que se beneficia mucho más a las clases con menos instancias que a las con más.
 - Se han organizado los resultados en una estructura de ficheros que permite comprobar de manera eficiente alguna fuga de datos indeseada. 
+- Se ha comprobado que, debido a la complejidad de la programación y que no tiene demasiado sentido, no se va a optar por incluir las rotaciones como parte de la aumentación de datos. Esto se debe en parte a que, en el caso de las rotaciones, no se podría ajustar con total exactitud la bounding box para que se mantenga paralela a los márgenes de la imagen e incluya en su totalidad la región de interés.
+- Se han considerado las translaciones entonces como forma de aumentación de datos, y, dado que puede ser una fuente de variación entre los videos, se ha optado por incluirlas en la aumentación de datos. Para poder solventar el problema de los bordes perdidos a la hora de aplicar la translación se ha decidido aplicar un relleno de bordes más cercanos con `cv2.copyMakeBorder`, técnica que aplica un espejo a los bordes, usada en el paper "U-Net: Convolutional Networks for Biomedical Image Segmentation" de [Ronneberger et al. en 2015](https://arxiv.org/abs/1505.04597). Se puede observar un efecto de la técnica:
+
+![Rellenado de bordes](./figures/prueba_translacion.png)
+
+- Se consideran las siguientes técnicas de aumentación de datos:
+    - **Escalado**: Aumentar o reducir el tamaño de la imagen para simular diferentes distancias de la cámara. (`cv2.resize`)
+    - **Adición de ruido**: Añadir ruido a la imagen para simular diferentes condiciones de iluminación. Se puede usar *ruido gaussiano o sal y pimienta*.
+
+- Se dejan ejemplos de las aumentaciones aplicadas:
+### **Brillo**
+![Brillo](./figures/ejemplo_brillo.png)
+### **Contraste**
+![Contraste](./figures/ejemplo_contraste.png)
+### **Translación**
+![Translación](./figures/ejemplo_translacion.png)
+
+Y este es un ejemplo de cómo quedaría la distribución de labels después de la aumentación de datos:
+
+![Distribución](./figures/label_distribution_train_ejemplo.png)
+
+Como se puede observar, las clases con lesión con menos instancias han sido aumentadas más que las con más. Se han incluído algunas imágenes aumentadas en nolesion para que la red no discrimine las imágenes con lesión por la aumentación de datos. 

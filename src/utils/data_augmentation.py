@@ -69,12 +69,23 @@ class DataAugmentor:
         augmentation_type = ""
 
         # Apply random augmentations
-        if random.random() > 0.5:
+        aug_type = random.choice(['brightness', 'contrast', 'translation'])
+        
+        if aug_type == 'brightness':
             img = self.random_brightness(img)
             augmentation_type = "brightness"
-        else:
+        elif aug_type == 'contrast':
             img = self.random_contrast(img)
             augmentation_type = "contrast"
+        elif aug_type == 'translation':
+            tx = random.randint(-20, 20)
+            ty = random.randint(-20, 20)
+            if row['Groundtruth_path'] != 'nolesion':
+                img, bbox_coords = self.random_translation(img, row['Groundtruth_path'], tx, ty)
+                augmentation_type = "translation"
+            else:
+                img = self.translate_image_only(img, tx, ty)
+                augmentation_type = "translation"
 
         # Save augmented image
         new_img_path, new_img_name = self.generate_new_path(img_path, dataset_type, augmentation_type, row['LesionLabel'])
@@ -83,7 +94,10 @@ class DataAugmentor:
         # Handle bounding box
         groundtruth_path = row['Groundtruth_path']
         if groundtruth_path != 'nolesion':
-            new_gt_path = self.copy_bounding_box(groundtruth_path, new_img_name, dataset_type)
+            if augmentation_type == "translation":
+                new_gt_path = self.save_translated_bounding_box(bbox_coords, new_img_name, dataset_type)
+            else:
+                new_gt_path = self.copy_bounding_box(groundtruth_path, new_img_name, dataset_type)
         else:
             new_gt_path = 'nolesion'
 
@@ -104,6 +118,76 @@ class DataAugmentor:
         alpha = random.uniform(0.9, 1.1)
         new_img = cv2.addWeighted(img, alpha, np.zeros(img.shape, img.dtype), 0, 0)
         return new_img
+
+    def random_translation(self, img: np.ndarray, gt_path: str, tx: int, ty: int) -> Tuple[np.ndarray, List[int]]:
+        """
+        Aplica una traslación aleatoria a la imagen y ajusta la bounding box.
+        """
+        # Leer la bounding box desde el archivo
+        with open(gt_path, 'r') as f:
+            bbox = f.readline().strip().split()
+            x, y, w, h = int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3])
+
+        # Calcular el tamaño del borde que necesitamos añadir para evitar los bordes negros
+        top = max(0, ty)
+        bottom = max(0, -ty)
+        left = max(0, tx)
+        right = max(0, -tx)
+
+        # Añadir bordes a la imagen usando la técnica de replicar bordes
+        image_with_border = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_REFLECT)
+
+        # Crear la matriz de traslación y aplicar la traslación a la imagen con bordes
+        translation_matrix = np.float32([[1, 0, tx], [0, 1, ty]])
+        translated_image_with_border = cv2.warpAffine(image_with_border, translation_matrix, (img.shape[1] + left + right, img.shape[0] + top + bottom))
+
+        # Recortar la imagen trasladada a su tamaño original
+        translated_image = translated_image_with_border[top:top + img.shape[0], left:left + img.shape[1]]
+
+        # Trasladar las coordenadas de la bounding box
+        new_x, new_y, new_w, new_h = self.translate_bounding_box(x, y, w, h, tx, ty)
+
+        return translated_image, [new_x, new_y, new_w, new_h]
+
+    @staticmethod
+    def translate_point(x, y, tx, ty):
+        """
+        Aplica la traslación a un punto (x, y).
+        """
+        new_x = x + tx
+        new_y = y + ty
+        return new_x, new_y
+
+    @staticmethod
+    def translate_bounding_box(x, y, width, height, tx, ty):
+        """
+        Traslada las coordenadas de la bounding box.
+        """
+        new_x = x + tx
+        new_y = y + ty
+        return new_x, new_y, width, height
+
+    def translate_image_only(self, img: np.ndarray, tx: int, ty: int) -> np.ndarray:
+        """
+        Aplica una traslación aleatoria solo a la imagen.
+        """
+        # Calcular el tamaño del borde que necesitamos añadir para evitar los bordes negros
+        top = max(0, ty)
+        bottom = max(0, -ty)
+        left = max(0, tx)
+        right = max(0, -tx)
+
+        # Añadir bordes a la imagen usando la técnica de replicar bordes
+        image_with_border = cv2.copyMakeBorder(img, top, bottom, left, right, cv2.BORDER_REFLECT)
+
+        # Crear la matriz de traslación y aplicar la traslación a la imagen con bordes
+        translation_matrix = np.float32([[1, 0, tx], [0, 1, ty]])
+        translated_image_with_border = cv2.warpAffine(image_with_border, translation_matrix, (img.shape[1] + left + right, img.shape[0] + top + bottom))
+
+        # Recortar la imagen trasladada a su tamaño original
+        translated_image = translated_image_with_border[top:top + img.shape[0], left:left + img.shape[1]]
+
+        return translated_image
 
     def generate_new_path(self, img_path: str, dataset_type: str, augmentation_type: str, lesion_label: str) -> Tuple[str, str]:
         # Extract patient and video info from the image path
@@ -144,6 +228,25 @@ class DataAugmentor:
 
         # Copy the bounding box file
         shutil.copy(gt_path, new_gt_path)
+
+        return new_gt_path
+
+    def save_translated_bounding_box(self, bbox_coords: List[int], new_img_name: str, dataset_type: str) -> str:
+        # Extract patient and video info from the new image path
+        path_parts = new_img_name.split('_')
+        patient_video = path_parts[0] + '_' + path_parts[1]
+
+        # Create the new bounding box directory path
+        new_dir = os.path.join(self.base_output_path, dataset_type, 'labels', 'lesion', patient_video)
+        os.makedirs(new_dir, exist_ok=True)
+
+        # Generate the new bounding box path
+        gt_name = new_img_name.replace('.png', '.txt')
+        new_gt_path = os.path.join(new_dir, gt_name)
+
+        # Save the new bounding box coordinates to the new file
+        with open(new_gt_path, 'w') as f:
+            f.write(f"{bbox_coords[0]} {bbox_coords[1]} {bbox_coords[2]} {bbox_coords[3]}")
 
         return new_gt_path
 
