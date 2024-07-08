@@ -1,80 +1,116 @@
-import pandas as pd
-import matplotlib.pyplot as plt
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+from typing import List, Dict
 
 class DatasetAnalyzer:
-    def __init__(self, train_path: str, augmented_train_path: str):
-        self.train_df = pd.read_csv(train_path)
-        self.augmented_train_df = pd.read_csv(augmented_train_path)
+    def __init__(self, data_path: str, save_path: str, augmentations: List[str]) -> None:
+        """
+        Inicializa la clase DatasetAnalyzer con la ruta de datos, ruta de guardado y las aumentaciones.
 
-    def compare_lesion_counts(self):
-        # Create a column to indicate presence of lesion
-        self.train_df['LesionPresence'] = self.train_df['LesionLabel'] != 'nolesion'
-        self.augmented_train_df['LesionPresence'] = self.augmented_train_df['LesionLabel'] != 'nolesion'
+        Args:
+            data_path (str): Ruta al conjunto de datos.
+            save_path (str): Ruta donde se guardarán las imágenes generadas.
+            augmentations (List[str]): Lista con los nombres de las aumentaciones.
+        """
+        self.data_path = data_path
+        self.save_path = save_path
+        self.augmentations = augmentations
+        self.sets = ['train', 'val', 'test']
+        self.extensions_images = ['.png']
+        self.extensions_labels = ['.txt']
 
-        # Count lesions and no lesions in the original and augmented datasets
-        pre_counts = self.train_df['LesionPresence'].value_counts()
-        post_counts = self.augmented_train_df['LesionPresence'].value_counts()
+    def count_files(self, path: str, extensions: List[str]) -> int:
+        """
+        Cuenta la cantidad de archivos en un directorio dado con las extensiones especificadas.
 
-        # Create a DataFrame for plotting
-        compare_df = pd.DataFrame({
-            'pre-augmentation': pre_counts,
-            'post-augmentation': post_counts
-        }).fillna(0)
+        Args:
+            path (str): Ruta al directorio.
+            extensions (List[str]): Lista de extensiones de archivos a contar.
 
-        # Rename index for better clarity
-        compare_df.index = ['No Lesion', 'Lesion']
+        Returns:
+            int: Número de archivos encontrados con las extensiones especificadas.
+        """
+        return len([f for f in os.listdir(path) if any(f.endswith(ext) for ext in extensions)])
 
-        # Plot the data
+    def analyze_dataset(self) -> None:
+        """
+        Realiza el análisis del dataset y genera las gráficas de distribución de labels y aumentaciones.
+        """
+        counts_images = {}
+        counts_labels = {}
+        counts_augmentations = {set_name: {aug: 0 for aug in ['none'] + self.augmentations} for set_name in self.sets}
+
+        for set_name in self.sets:
+            images_path = os.path.join(self.data_path, 'images', set_name)
+            labels_path = os.path.join(self.data_path, 'labels', set_name)
+
+            counts_images[set_name] = self.count_files(images_path, self.extensions_images)
+            counts_labels[set_name] = self.count_files(labels_path, self.extensions_labels)
+
+            # Contar las imágenes aumentadas
+            for image_file in os.listdir(images_path):
+                if image_file.endswith('.png'):
+                    found_augmentation = False
+                    for aug in self.augmentations:
+                        if aug in image_file:
+                            counts_augmentations[set_name][aug] += 1
+                            found_augmentation = True
+                            break
+                    if not found_augmentation:
+                        counts_augmentations[set_name]['none'] += 1
+
+        self._plot_images_labels_distribution(counts_images, counts_labels)
+        self._plot_augmentations_heatmap(counts_augmentations)
+
+    def _plot_images_labels_distribution(self, counts_images: Dict[str, int], counts_labels: Dict[str, int]) -> None:
+        """
+        Genera y guarda una gráfica de barras comparando el número de imágenes y labels por set.
+
+        Args:
+            counts_images (Dict[str, int]): Diccionario con los conteos de imágenes por set.
+            counts_labels (Dict[str, int]): Diccionario con los conteos de labels por set.
+        """
         fig, ax = plt.subplots()
-        compare_df.plot(kind='bar', ax=ax, color=['skyblue', 'salmon'])
-        ax.set_title('Lesion vs No Lesion Counts Before and After Augmentation')
-        ax.set_ylabel('Count')
-        ax.set_xlabel('Lesion Presence')
-        plt.xticks(rotation=0)
+        bar_width = 0.35
+        index = range(len(self.sets))
 
-        # Save the figure
-        output_dir = './figures/augmentation'
-        os.makedirs(output_dir, exist_ok=True)
-        plt.savefig(os.path.join(output_dir, 'lesion_comparison.png'))
+        bar1 = plt.bar(index, [counts_images[set_name] for set_name in self.sets], bar_width, label='Images')
+        bar2 = plt.bar([i + bar_width for i in index], [counts_labels[set_name] for set_name in self.sets], bar_width, label='Labels')
+
+        plt.xlabel('Dataset')
+        plt.ylabel('Count')
+        plt.title('Number of Images and Labels per Dataset')
+        plt.xticks([i + bar_width / 2 for i in index], self.sets)
+        plt.legend()
+
+        plt.savefig(os.path.join(self.save_path, 'images_labels_distribution.png'))
+        plt.close(fig)
+
+    def _plot_augmentations_heatmap(self, counts_augmentations: Dict[str, Dict[str, int]]) -> None:
+        """
+        Genera y guarda un heatmap de las imágenes aumentadas por set y tipo de aumentación.
+
+        Args:
+            counts_augmentations (Dict[str, Dict[str, int]]): Diccionario con los conteos de aumentaciones por set y tipo.
+        """
+        augmentations_data = []
+        for set_name in self.sets:
+            for aug in ['none'] + self.augmentations:
+                augmentations_data.append([set_name, aug, counts_augmentations[set_name][aug]])
+
+        df_augmentations = pd.DataFrame(augmentations_data, columns=['Set', 'Augmentation', 'Count'])
+        df_pivot = df_augmentations.pivot_table(values='Count', index='Augmentation', columns='Set')
+
+        # Convertir los valores a enteros
+        df_pivot = df_pivot.astype(int)
+
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(df_pivot, annot=True, fmt='d', cmap='YlGnBu')
+        plt.title('Heatmap of Image Augmentations')
+
+        plt.savefig(os.path.join(self.save_path, 'augmentations_heatmap.png'))
         plt.close()
 
-    def compare_lesion_label_counts(self):
-        # Filter only lesion images
-        pre_lesion_df = self.train_df[self.train_df['LesionLabel'] != 'nolesion']
-        post_lesion_df = self.augmented_train_df[self.augmented_train_df['LesionLabel'] != 'nolesion']
 
-        # Count lesion labels in the original and augmented datasets
-        pre_counts = pre_lesion_df['LesionLabel'].value_counts()
-        post_counts = post_lesion_df['LesionLabel'].value_counts()
-
-        # Define lesion categories
-        lesion_categories = ['p70_90', 'p90_98', 'p99', 'p100']
-        
-        # Create a DataFrame for plotting
-        compare_df = pd.DataFrame({
-            'pre-augmentation': [pre_counts.get(label, 0) for label in lesion_categories],
-            'post-augmentation': [post_counts.get(label, 0) for label in lesion_categories]
-        }, index=lesion_categories)
-
-        # Plot the data
-        fig, ax = plt.subplots()
-        compare_df.plot(kind='bar', ax=ax, color=['skyblue', 'salmon'])
-        ax.set_title('Lesion Label Counts Before and After Augmentation')
-        ax.set_ylabel('Count')
-        ax.set_xlabel('LesionLabel')
-        plt.xticks(rotation=0)
-
-        # Save the figure
-        output_dir = './figures/augmentation'
-        os.makedirs(output_dir, exist_ok=True)
-        plt.savefig(os.path.join(output_dir, 'lesion_label_comparison.png'))
-        plt.close()
-
-# Usage
-train_path = './data/holdout/val.csv'
-augmented_train_path = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented/augmented_val.csv'
-
-analyzer = DatasetAnalyzer(train_path, augmented_train_path)
-analyzer.compare_lesion_counts()
-analyzer.compare_lesion_label_counts()

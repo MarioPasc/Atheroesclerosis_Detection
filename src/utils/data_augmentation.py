@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 class DataAugmentor:
     def __init__(self, train_path: str, val_path: str, base_output_path: str):
+        
         self.train_df = pd.read_csv(train_path)
         self.val_df = pd.read_csv(val_path)
         self.base_output_path = base_output_path
@@ -126,7 +127,7 @@ class DataAugmentor:
         # Leer la bounding box desde el archivo
         with open(gt_path, 'r') as f:
             bbox = f.readline().strip().split()
-            x, y, w, h = int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3])
+            x, y, w, h, label = int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]), str(bbox[4])
 
         # Calcular el tamaño del borde que necesitamos añadir para evitar los bordes negros
         top = max(0, ty)
@@ -147,7 +148,7 @@ class DataAugmentor:
         # Trasladar las coordenadas de la bounding box
         new_x, new_y, new_w, new_h = self.translate_bounding_box(x, y, w, h, tx, ty)
 
-        return translated_image, [new_x, new_y, new_w, new_h]
+        return translated_image, [new_x, new_y, new_w, new_h, label]
 
     @staticmethod
     def translate_point(x, y, tx, ty):
@@ -246,7 +247,8 @@ class DataAugmentor:
 
         # Save the new bounding box coordinates to the new file
         with open(new_gt_path, 'w') as f:
-            f.write(f"{bbox_coords[0]} {bbox_coords[1]} {bbox_coords[2]} {bbox_coords[3]}")
+            # 4th position in the label
+            f.write(f"{bbox_coords[0]} {bbox_coords[1]} {bbox_coords[2]} {bbox_coords[3]} {bbox_coords[4]}")
 
         return new_gt_path
 
@@ -282,11 +284,3 @@ class DataAugmentor:
         plt_path = os.path.join(self.base_output_path, f'label_distribution_{dataset_type}.png')
         plt.savefig(plt_path)
         plt.close()
-
-# Usage
-train_path = './data/holdout/train.csv'
-val_path = './data/holdout/val.csv'
-base_output_path = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented'
-
-augmentor = DataAugmentor(train_path, val_path, base_output_path)
-augmentor.augment_data(augmented_lesion_images=500, augmented_nolesion_images=100)

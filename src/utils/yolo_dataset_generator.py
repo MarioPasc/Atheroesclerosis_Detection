@@ -19,9 +19,9 @@ class DatasetGenerator:
     """
     class_mappings = {
         "p70_90": 0,
-        "p90_98": 1,
-        "p99": 2,
-        "p100": 3
+        "p90_98": 0,
+        "p99": 0,
+        "p100": 0
     }
     def __init__(self, train_csv: str, val_csv: str, test_csv: str, dataset_dir: str):
         """
@@ -103,7 +103,7 @@ class DatasetGenerator:
                     img_width, img_height = self.get_image_dimensions(image_src)
                     
                     with open(label_dst, 'w') as f:
-                        for bbox in bboxes:
+                        for bbox in bboxes:                            
                             yolo_bbox = self.convert_bbox_format(bbox.strip(), img_width, img_height)
                             f.write(yolo_bbox + '\n')
                 except FileNotFoundError:

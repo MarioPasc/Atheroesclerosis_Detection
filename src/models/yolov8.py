@@ -62,12 +62,6 @@ class Detection_YOLOv8:
         print("Validation results saved to 'validation_results.csv'")
 
 
-
-
-            
-
-
-
 def main() -> int:
     model = Detection_YOLOv8(model_path="", yaml_path="./config.yaml")
     model.train()
