@@ -62,3 +62,39 @@ La aumentación de datos tiene un impacto positivo en el rendimiento del modelo,
 ## Resumen
 
 En resumen, las técnicas de aumentación de datos han supuesto una clara ventaja a la hora de entrenar el modelo para la detección, aumentando de promedio todas las métricas, y mostrando mediante la comparación, las áreas en las que el modelo flaquea, que es, principalmente, la detección de la lesión en la imagen (recall), sin embargo, una vez el modelo detecta una lesión, no se equivoca (precisión). El mAP combina la esencia de estos dos anteriores análisis, en concreto, este mAP@50-95 bajo indica que el modelo no tiene una buena capacidad de realizar predicciones precisas y bien localizadas. 
+
+# Ajuste de los hiperparámetros del modelo
+
+Como se ha comentado, se comenzará con el ajuste de los hiperparámetros del modelo. El objetivo de la sección es, bajo un mismo conjunto de datos aumentado, probar diferentes configuraciones de hiperparámetros relacionadas con el optimizador, tasa de aprendizaje, dropout, ... y ver qué configuración de hiperparámetros mejor funciona para el modelo. En el momento en el que se alcance un techo de rendimiento, se podrá proceder con otro tipo de aumentación de datos o técnicas. 
+
+| Hiperparámetro      | Baseline       | Config1                 | Config2 |
+|---------------------|----------------|-------------------------|---------|
+| `epochs`            | 100            | 100                     | 100     |
+| `imgsz`             | 640            | 640                     | 640     |
+| `augment`           | False          | False                   | False   |
+| `hsv_h`             | 0.0            | 0.0                     | 0.0     |
+| `hsv_s`             | 0.0            | 0.0                     | 0.0     |
+| `hsv_v`             | 0.0            | 0.0                     | 0.0     |
+| `degrees`           | 0.0            | 0.0                     | 0.0     |
+| `translate`         | 0.0            | 0.0                     | 0.0     |
+| `scale`             | 0.0            | 0.0                     | 0.0     |
+| `shear`             | 0.0            | 0.0                     | 0.0     |
+| `perspective`       | 0.0            | 0.0                     | 0.0     |
+| `flipud`            | 0.0            | 0.0                     | 0.0     |
+| `fliplr`            | 0.0            | 0.0                     | 0.0     |
+| `mosaic`            | 0.0            | 0.0                     | 0.0     |
+| `close_mosaic`      | 0              | 0                       | 0.0     |
+| `mixup`             | 0.0            | 0.0                     | 0.0     |
+| `copy_paste`        | 0.0            | 0.0                     | 0.0     |
+| `auto_augment`      | ""             | ""                      | ""      |
+| `erasing`           | 0.0            | 0.0                     | 0.0     |
+| `batch`             | 4              | 4                       | 4       |
+| `cos_lr`            | -              | True                    | True    |
+| `lr0`               | -              | 0.005                   | 0.001   |
+| `lrf`               | -              | 0.01                    | 0.01    |  
+| `momentum`          | -              | 0.9                     | 0.9     |
+| `weight_decay`      | -              | 0.001                   | 0.001   |
+| `optimizer`         | -              | `Adam`                  | `Adam`  |
+| `warmup_epochs`     | -              | 5.0                     | 5.0     |
+| `label_smoothing`   | -              | 0.1                     | 0.1     |
+| `dropout`           | -              | 0.1                     | 0.05    |
