@@ -40,7 +40,8 @@ class DatasetAnalyzer:
         """
         counts_images = {}
         counts_labels = {}
-        counts_augmentations = {set_name: {aug: 0 for aug in ['none'] + self.augmentations} for set_name in self.sets}
+        counts_nolesion = {}
+        counts_augmentations = {set_name: {aug: 0 for aug in self.augmentations} for set_name in self.sets}
 
         for set_name in self.sets:
             images_path = os.path.join(self.data_path, 'images', set_name)
@@ -49,43 +50,55 @@ class DatasetAnalyzer:
             counts_images[set_name] = self.count_files(images_path, self.extensions_images)
             counts_labels[set_name] = self.count_files(labels_path, self.extensions_labels)
 
+            # Contar las imágenes sin lesión
+            counts_nolesion[set_name] = counts_images[set_name] - counts_labels[set_name]
+
             # Contar las imágenes aumentadas
+            total_augmented = 0
             for image_file in os.listdir(images_path):
                 if image_file.endswith('.png'):
-                    found_augmentation = False
                     for aug in self.augmentations:
                         if aug in image_file:
                             counts_augmentations[set_name][aug] += 1
-                            found_augmentation = True
+                            total_augmented += 1
                             break
-                    if not found_augmentation:
-                        counts_augmentations[set_name]['none'] += 1
 
-        self._plot_images_labels_distribution(counts_images, counts_labels)
+            # Calcular imágenes sin aumentación
+            counts_augmentations[set_name]['none'] = counts_images[set_name] - total_augmented
+
+        self._plot_images_labels_distribution(counts_images, counts_labels, counts_nolesion)
         self._plot_augmentations_heatmap(counts_augmentations)
 
-    def _plot_images_labels_distribution(self, counts_images: Dict[str, int], counts_labels: Dict[str, int]) -> None:
+    def _plot_images_labels_distribution(self, counts_images: Dict[str, int], counts_labels: Dict[str, int], counts_nolesion: Dict[str, int]) -> None:
         """
-        Genera y guarda una gráfica de barras comparando el número de imágenes y labels por set.
+        Genera y guarda una gráfica de barras comparando el número de imágenes, labels y nolesion por set.
 
         Args:
             counts_images (Dict[str, int]): Diccionario con los conteos de imágenes por set.
             counts_labels (Dict[str, int]): Diccionario con los conteos de labels por set.
+            counts_nolesion (Dict[str, int]): Diccionario con los conteos de imágenes sin lesión por set.
         """
         fig, ax = plt.subplots()
-        bar_width = 0.35
+        bar_width = 0.25
         index = range(len(self.sets))
 
         bar1 = plt.bar(index, [counts_images[set_name] for set_name in self.sets], bar_width, label='Images')
         bar2 = plt.bar([i + bar_width for i in index], [counts_labels[set_name] for set_name in self.sets], bar_width, label='Labels')
+        bar3 = plt.bar([i + 2 * bar_width for i in index], [counts_nolesion[set_name] for set_name in self.sets], bar_width, label='Nolesion Images')
 
         plt.xlabel('Dataset')
         plt.ylabel('Count')
-        plt.title('Number of Images and Labels per Dataset')
-        plt.xticks([i + bar_width / 2 for i in index], self.sets)
+        plt.title('Number of Images, Labels, and Nolesion Images per Dataset')
+        plt.xticks([i + bar_width for i in index], self.sets)
         plt.legend()
 
-        plt.savefig(os.path.join(self.save_path, 'images_labels_distribution.png'))
+        # Añadir los valores encima de cada barra
+        for bars in [bar1, bar2, bar3]:
+            for bar in bars:
+                height = bar.get_height()
+                plt.text(bar.get_x() + bar.get_width() / 2, height, f'{height}', ha='center', va='bottom', fontsize=8)
+
+        plt.savefig(os.path.join(self.save_path, 'images_labels_nolesion_distribution.png'))
         plt.close(fig)
 
     def _plot_augmentations_heatmap(self, counts_augmentations: Dict[str, Dict[str, int]]) -> None:
@@ -97,7 +110,7 @@ class DatasetAnalyzer:
         """
         augmentations_data = []
         for set_name in self.sets:
-            for aug in ['none'] + self.augmentations:
+            for aug in self.augmentations + ['none']:
                 augmentations_data.append([set_name, aug, counts_augmentations[set_name][aug]])
 
         df_augmentations = pd.DataFrame(augmentations_data, columns=['Set', 'Augmentation', 'Count'])
@@ -112,5 +125,3 @@ class DatasetAnalyzer:
 
         plt.savefig(os.path.join(self.save_path, 'augmentations_heatmap.png'))
         plt.close()
-
-

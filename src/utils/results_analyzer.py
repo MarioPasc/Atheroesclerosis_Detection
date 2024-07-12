@@ -59,5 +59,5 @@ class ComparativeAnalysis:
         plt.savefig(f"{self.path_to_results}/{metric}_comparison.png")
         plt.show()
 
-analysis = ComparativeAnalysis(path_to_results='data/results/week1/baseline_reducted_with_validation')
+analysis = ComparativeAnalysis(path_to_results='data/results/week3/results_config3')
 analysis.plot_comparative_graphs()

@@ -33,7 +33,6 @@ def analyze_dataset(dataset_path:str, save_path:str, augmentations:List[str]):
 def main():
     base_path = "/home/mariopasc/Python/Datasets/Coronariografias/CADICA"
     output_csv_path = os.path.join('./data/info_dataset.csv')
-
     df = generate_dataset_csv(base_path = base_path,
                               output_csv_path = output_csv_path)
     print('Holdout')
@@ -43,14 +42,15 @@ def main():
     augmented_output = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented'
     data_augmentation(train_csv='./data/holdout/train.csv', val_csv='./data/holdout/val.csv',
                       augmented_output= augmented_output,
-                      augmented_lesion_images=900, augmented_nolesion_images=100)
+                      augmented_lesion_images=700, augmented_nolesion_images=150)
     print('Processing YOLOv8 Dataset')
     dataset_dir='/home/mariopasc/Python/Datasets/Coronariografias/Baseline_CADICA_Detection'
     generate_dataset(train_csv=os.path.join(augmented_output, 'full_augmented_train.csv'),
                     val_csv=os.path.join(augmented_output, 'full_augmented_val.csv'),
                     test_csv='./data/holdout/test.csv',
                     dataset_dir=dataset_dir)
-    augmentations = ['translation', 'contrast', 'brightness']  # Lista de aumentaciones
+
+    augmentations = ['translation', 'contrast', 'brightness', 'xray_noise']  # Lista de aumentaciones
     analyze_dataset(dataset_path=dataset_dir, save_path="./figures/distribution",
                     augmentations=augmentations)
 

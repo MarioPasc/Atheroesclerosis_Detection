@@ -70,7 +70,11 @@ class DataAugmentor:
         augmentation_type = ""
 
         # Apply random augmentations
-        aug_type = random.choice(['brightness', 'contrast', 'translation'])
+        aug_type = random.choices(
+            ['brightness', 'contrast', 'translation', 'xray_noise'], 
+            [0.3, 0.3, 0.3, 0.1], 
+            k=1
+        )[0]
         
         if aug_type == 'brightness':
             img = self.random_brightness(img)
@@ -79,14 +83,17 @@ class DataAugmentor:
             img = self.random_contrast(img)
             augmentation_type = "contrast"
         elif aug_type == 'translation':
-            tx = random.randint(-20, 20)
-            ty = random.randint(-20, 20)
+            tx = random.randint(-25, 25)
+            ty = random.randint(-25, 25)
             if row['Groundtruth_path'] != 'nolesion':
                 img, bbox_coords = self.random_translation(img, row['Groundtruth_path'], tx, ty)
                 augmentation_type = "translation"
             else:
                 img = self.translate_image_only(img, tx, ty)
                 augmentation_type = "translation"
+        elif aug_type == 'xray_noise':
+            img = self.add_xray_noise(img)
+            augmentation_type = "xray_noise"
 
         # Save augmented image
         new_img_path, new_img_name = self.generate_new_path(img_path, dataset_type, augmentation_type, row['LesionLabel'])
@@ -109,14 +116,14 @@ class DataAugmentor:
 
     @staticmethod
     def random_brightness(img: np.ndarray) -> np.ndarray:
-        value = random.uniform(0.9, 1.1)
+        value = random.uniform(0.8, 1.2)
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         hsv[:, :, 2] = cv2.multiply(hsv[:, :, 2], value)
         return cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
     @staticmethod
     def random_contrast(img: np.ndarray) -> np.ndarray:
-        alpha = random.uniform(0.9, 1.1)
+        alpha = random.uniform(0.85, 1.15)
         new_img = cv2.addWeighted(img, alpha, np.zeros(img.shape, img.dtype), 0, 0)
         return new_img
 
@@ -189,6 +196,20 @@ class DataAugmentor:
         translated_image = translated_image_with_border[top:top + img.shape[0], left:left + img.shape[1]]
 
         return translated_image
+
+    @staticmethod
+    def add_xray_noise(img: np.ndarray) -> np.ndarray:
+        """
+        Añade ruido gaussiano leve a una imagen simulando el ruido de un escáner de rayos X.
+        """
+        row, col, ch = img.shape
+        mean = 0
+        sigma = 10  # Desviación estándar para el ruido leve
+        gauss = np.random.normal(mean, sigma, (row, col, ch))
+        gauss = gauss.reshape(row, col, ch)
+        noisy_img = img + gauss
+        noisy_img = np.clip(noisy_img, 0, 255).astype(np.uint8)
+        return noisy_img
 
     def generate_new_path(self, img_path: str, dataset_type: str, augmentation_type: str, lesion_label: str) -> Tuple[str, str]:
         # Extract patient and video info from the image path
