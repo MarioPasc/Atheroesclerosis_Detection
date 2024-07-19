@@ -167,5 +167,5 @@ class ComparativeAnalysis:
             f.write(stats_df.to_markdown(index=False))
 
 # Ejemplo de uso
-analysis = ComparativeAnalysis(path_to_results='data/results/week4/results_config4')
+analysis = ComparativeAnalysis(path_to_results='data/results/week4/results_config6')
 analysis.plot_comparative_graphs()
