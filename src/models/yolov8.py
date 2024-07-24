@@ -21,7 +21,15 @@ class Detection_YOLOv8:
                                          label_smoothing=0.1, dropout=0.1,
                                          augment=False, hsv_h=0.0, hsv_s=0.0, hsv_v=0.0, degrees=0.0, translate=0.0,
                                          scale=0.0, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.0, mosaic=0.0,
-                                         close_mosaic=0, mixup=0.0, copy_paste=0.0, auto_augment="", erasing=0.0, batch=4)
+                                         close_mosaic=0, mixup=0.0, copy_paste=0.0, erasing=0.0, batch=4)
+        
+    def tune(self) -> None:
+        results_tuning = self.model.tune(data=self.yaml_path, epochs=30, iterations=300, save=False, plots=False, val=False,
+                                         name="ateroesclerosis_tuning",seed=42, single_cls=True,  
+                                         augment=False, 
+                                         hsv_h=0.0, hsv_s=0.0, hsv_v=0.0, degrees=0.0, translate=0.0,
+                                         scale=0.0, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.0, 
+                                         mosaic=0.0, close_mosaic=0, mixup=0.0, copy_paste=0.0, erasing=0.0)
 
     def val(self) -> None:
         weights_folder = "./runs/detect/ateroesclerosis_training/weights"
@@ -66,8 +74,9 @@ class Detection_YOLOv8:
 
 def main() -> int:
     model = Detection_YOLOv8(model_path="", yaml_path="./config.yaml")
-    model.train()
-    model.val()
+    #model.train()
+    #model.val()
+    model.tune()
     return 0
 
 if __name__ == "__main__":
