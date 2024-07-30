@@ -12,16 +12,48 @@ class Detection_YOLOv8:
         self.model = ultralytics.YOLO(model=model_path)
         self.yaml_path = yaml_path
 
-    def train(self) -> None:
-        results_train = self.model.train(data=self.yaml_path, epochs=120, imgsz=640,
-                                         save=True, save_period=1,
-                                         name="ateroesclerosis_training", verbose=True,
-                                         seed=42, single_cls=True, plots=True, cos_lr=True, 
-                                         lr0=0.001, lrf= 0.01, momentum=0.9, weight_decay=0.001, optimizer='Adam', warmup_epochs=5.0, 
-                                         label_smoothing=0.1, dropout=0.1,
-                                         augment=False, hsv_h=0.0, hsv_s=0.0, hsv_v=0.0, degrees=0.0, translate=0.0,
-                                         scale=0.0, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.0, mosaic=0.0,
-                                         close_mosaic=0, mixup=0.0, copy_paste=0.0, erasing=0.0, batch=4)
+    def train(self, hyperparameters: dict) -> None:
+        # Merge default hyperparameters with the provided ones
+        default_params = {
+            'data': self.yaml_path,
+            'epochs': 120,
+            'imgsz': 640,
+            'save': True,
+            'save_period': 1,
+            'name': "ateroesclerosis_training",
+            'verbose': True,
+            'seed': 42,
+            'single_cls': True,
+            'plots': True,
+            'cos_lr': True,
+            'lr0': 0.001,
+            'lrf': 0.01,
+            'momentum': 0.9,
+            'weight_decay': 0.001,
+            'optimizer': 'Adam',
+            'warmup_epochs': 5.0,
+            'label_smoothing': 0.1,
+            'dropout': 0.1,
+            'augment': False,
+            'hsv_h': 0.0,
+            'hsv_s': 0.0,
+            'hsv_v': 0.0,
+            'degrees': 0.0,
+            'translate': 0.0,
+            'scale': 0.0,
+            'shear': 0.0,
+            'perspective': 0.0,
+            'flipud': 0.0,
+            'fliplr': 0.0,
+            'mosaic': 0.0,
+            'close_mosaic': 0,
+            'mixup': 0.0,
+            'copy_paste': 0.0,
+            'erasing': 0.0,
+            'batch': 4
+        }
+        params = {**default_params, **hyperparameters}
+        self.model.train(**params)
         
     def tune(self) -> None:
         results_tuning = self.model.tune(data=self.yaml_path, epochs=30, iterations=300, save=False, plots=False, val=False,
