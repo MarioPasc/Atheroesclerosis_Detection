@@ -44,7 +44,7 @@ class FineTuningAnalyzer:
         plt.show()
 
 def main():
-    results_folder = "./data/results/week6/fine_tuning_lr0"
+    results_folder = "./data/results/week6/fine_tuning_momentum"
     analyzer = FineTuningAnalyzer(results_folder=results_folder)
     analyzer.plot_results()
 
