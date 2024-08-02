@@ -13,7 +13,7 @@ cache: false
 device: null
 workers: 8
 project: null
-name: ateroesclerosis_training
+name: ateroesclerosis_training5
 exist_ok: false
 pretrained: true
 optimizer: AdamW
@@ -72,7 +72,7 @@ workspace: 4
 nms: false
 lr0: 0.0001
 lrf: 0.01
-momentum: 0.85
+momentum: 0.89
 weight_decay: 0.001
 warmup_epochs: 1
 warmup_momentum: 0.8
@@ -103,4 +103,4 @@ erasing: 0.0
 crop_fraction: 1.0
 cfg: null
 tracker: botsort.yaml
-save_dir: runs/detect/ateroesclerosis_training
+save_dir: runs/detect/ateroesclerosis_training5
