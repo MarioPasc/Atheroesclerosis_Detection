@@ -38,13 +38,14 @@ def main():
     print('Holdout')
     holdout_dataset(csv_path = './data/info_dataset.csv', val_size = .2, test_size = .2, 
                 labels=["p70_90", "p90_98", "p99", "p100"])
+    #"p0_20", "p20_50", "p50_70", 
     print('Applying data augmentation')
     augmented_output = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented'
     data_augmentation(train_csv='./data/holdout/train.csv', val_csv='./data/holdout/val.csv',
                       augmented_output= augmented_output,
-                      augmented_lesion_images=700, augmented_nolesion_images=150)
+                      augmented_lesion_images=1500, augmented_nolesion_images=900)
     print('Processing YOLOv8 Dataset')
-    dataset_dir='/home/mariopasc/Python/Datasets/Coronariografias/Baseline_CADICA_Detection'
+    dataset_dir='/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Detection'
     generate_dataset(train_csv=os.path.join(augmented_output, 'full_augmented_train.csv'),
                     val_csv=os.path.join(augmented_output, 'full_augmented_val.csv'),
                     test_csv='./data/holdout/test.csv',

@@ -18,6 +18,9 @@ class DatasetGenerator:
     }
     """
     class_mappings = {
+        "p0_20": 0,
+        "p20_50": 0,
+        "p50_70":0,
         "p70_90": 0,
         "p90_98": 0,
         "p99": 0,

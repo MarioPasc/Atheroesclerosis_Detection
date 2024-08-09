@@ -17,23 +17,23 @@ class Detection_YOLOv8:
         default_params = {
             'data': self.yaml_path,
             'epochs': 120,
-            'imgsz': 640,
+            'imgsz': 512,
             'save': True,
-            'save_period': 1,
+            'save_period': -1,
             'name': "ateroesclerosis_training",
             'verbose': True,
             'seed': 42,
             'single_cls': True,
             'plots': True,
             'cos_lr': True,
-            'lr0': 0.001,
+            'lr0': 0.0001,
             'lrf': 0.01,
-            'momentum': 0.9,
-            'weight_decay': 0.001,
-            'optimizer': 'Adam',
-            'warmup_epochs': 5.0,
+            'momentum': 0.6,
+            'weight_decay': 0.0005,
+            'optimizer': 'AdamW',
+            'warmup_epochs': 3.0,
             'label_smoothing': 0.1,
-            'dropout': 0.1,
+            'dropout': 0.005,
             'augment': False,
             'hsv_h': 0.0,
             'hsv_s': 0.0,
@@ -50,7 +50,7 @@ class Detection_YOLOv8:
             'mixup': 0.0,
             'copy_paste': 0.0,
             'erasing': 0.0,
-            'batch': 4
+            'batch': 8
         }
         params = {**default_params, **hyperparameters}
         self.model.train(**params)

@@ -103,6 +103,28 @@ class Detection_YOLOv8:
         results_df.to_csv(os.path.join('./runs/detect/ateroesclerosis_training', 'validation_results.csv'), index=False)
         print("Validation results saved to 'validation_results.csv'")
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_email(subject: str, body: str, to_email: str):
+    from_email = "mario.pg02@gmail.com"  # Cambia esto por tu correo
+    from_password = "dddw jysk gbaj knhm "  # Cambia esto por tu contraseña
+
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(from_email, from_password)
+    text = msg.as_string()
+    server.sendmail(from_email, to_email, text)
+    server.quit()
+
 class YOLOv8_Tuning:
 
     def __init__(self, detection_model: Detection_YOLOv8, base_path: str = './runs/detect') -> None:
@@ -121,16 +143,57 @@ class YOLOv8_Tuning:
             }
             self.detection_model.train(hyperparameters)
 
+    def train_with_different_lr0(self, lr0_values: list) -> None:
+        for lr0 in lr0_values:
+            experiment_name = f"finetune_lr0{lr0}"
+            print(f"Training with lr0 = {lr0}")
+            hyperparameters = {
+                'lr0': lr0,
+                'name': experiment_name
+            }
+            self.detection_model.train(hyperparameters)
+
+    def train_with_different_momentum(self, momentum_values: list) -> None:
+        for momentum in momentum_values:
+            experiment_name = f"finetune_mom{momentum}"
+            print(f"Training with momentum = {momentum}")
+            hyperparameters = {
+                'momentum': momentum,
+                'name': experiment_name
+            }
+            self.detection_model.train(hyperparameters)
+
+    def train_with_different_lrf(self, lrf_values: list) -> None:
+        for lrf in lrf_values:
+            experiment_name = f"finetune_lrf{lrf}"
+            print(f"Training with lrf = {lrf}")
+            hyperparameters = {
+                'lrf': lrf,
+                'name': experiment_name
+            }
+            self.detection_model.train(hyperparameters)
+
 def main() -> int:
     detection_model = Detection_YOLOv8(model_path="", yaml_path="./config.yaml")
     tuner = YOLOv8_Tuning(detection_model)
 
-    lr0_values = [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]
-    momentum_values = [0.8, 0.85, 0.9, 0.92, 0.94, 0.96, 0.98]
-    lrf_values = [0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5]
-    tuner.train_with_hyperparameter_grid(lr0_values, momentum_values, lrf_values)
+    lr0_values = [0.00005, 0.000075]
+    momentum_values = [0.6, 0.65, 0.7, 0.72, 0.75, 0.78]
+    lrf_values = [0.01, 0.025, 0.05, 0.075, 0.1, 0.25]
 
-    return 0
+    # Train with different lr0 values
+    #tuner.train_with_different_lr0(lr0_values)
+
+    # Train with different momentum values
+    #tuner.train_with_different_momentum(momentum_values)
+        # Send email after training
+    # Train with different lrf values
+    tuner.train_with_different_lrf(lrf_values)
+    send_email(
+        subject="Training LRF Complete",
+        body="The training with different LRF values has been completed.",
+        to_email="mario.pg02@gmail.com"  
+    )
 
 if __name__ == "__main__":
     main()
