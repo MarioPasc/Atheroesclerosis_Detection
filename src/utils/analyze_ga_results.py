@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from natsort import natsorted
 import matplotlib.pyplot as plt
+from scipy.ndimage import gaussian_filter1d
 
 class AnalyzerGA:
 
@@ -57,8 +58,8 @@ class AnalyzerGA:
             
             # Dibujar la línea y los puntos, coloreados según el valor de 'fitness'
             sc = plt.scatter(df_combined['name_number'], df_combined[metric], c=df_combined['fitness'], cmap='viridis', edgecolor='k')
-            plt.plot(df_combined['name_number'], df_combined[metric], color='grey', alpha=0.5)
-            
+            smooth_values = gaussian_filter1d(df_combined[metric], sigma=2)
+            plt.plot(df_combined['name_number'], smooth_values, color='orange', linestyle='--')            
             # Encontrar el valor máximo y su posición
             max_value = df_combined[metric].max()
             max_index = df_combined[df_combined[metric] == max_value]['name_number'].iloc[0]
