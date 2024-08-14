@@ -18,7 +18,7 @@ class AnalyzerGA:
         for file in os.listdir(self.path):
             if file != 'tune':
                 df = pd.read_csv(os.path.join(self.path,file, 'results.csv'))
-                metrics = df.iloc[29, :]
+                metrics = df.iloc[49, :]
                 metrics.index = [x.strip(" ") for x in metrics.index]
                 metrics_df = metrics.to_frame().T
                 metrics_df['name'] = file  
@@ -52,11 +52,9 @@ class AnalyzerGA:
         
         metrics = ['metrics/recall(B)', 'metrics/precision(B)', 'metrics/mAP50(B)', 'metrics/mAP50-95(B)']
         
-        # Crear una figura y ejes para cada métrica
         for metric in metrics:
             plt.figure(figsize=(12, 8))
             
-            # Dibujar la línea y los puntos, coloreados según el valor de 'fitness'
             sc = plt.scatter(df_combined['name_number'], df_combined[metric], c=df_combined['fitness'], cmap='viridis', edgecolor='k')
             smooth_values = gaussian_filter1d(df_combined[metric], sigma=2)
             plt.plot(df_combined['name_number'], smooth_values, color='orange', linestyle='--')            
@@ -64,23 +62,18 @@ class AnalyzerGA:
             max_value = df_combined[metric].max()
             max_index = df_combined[df_combined[metric] == max_value]['name_number'].iloc[0]
             
-            # Dibujar líneas verticales y horizontales en el valor máximo
             plt.axvline(x=max_index, color='red', linestyle='--')
             plt.axhline(y=max_value, color='red', linestyle='--')
             
-            # Anotar el valor máximo en la gráfica
             plt.text(max_index-2, max_value+0.001, f'({max_index}, {max_value:.2f})', color='red', fontsize=10, ha='right')
             
-            # Etiquetas y título
             plt.xlabel('Configuración (Número)')
             plt.ylabel(metric)
             plt.title(f'Evolución de {metric} a través de la configuración')
-            plt.xticks(ticks=[])  # Rotar etiquetas de eje x
+            plt.xticks(ticks=[])  
             
-            # Añadir barra de color para representar el valor de 'fitness'
             plt.colorbar(sc, label='fitness')
             
-            # Ajustar el layout para dejar más espacio entre las etiquetas
             plt.tight_layout()
             name = metric.split('/')[-1].strip('(B)')
             plt.savefig(os.path.join(self.path, 'tune', f'{name}_evolution.png'))
@@ -91,7 +84,7 @@ class AnalyzerGA:
         self.plot_metrics_vs_name()
 
 def main() -> None:
-    analyzer = AnalyzerGA(detect_path="./data/results/week7/results_ga/detect")
+    analyzer = AnalyzerGA(detect_path="./data/results/week8/GA_Recall_config/detect")
     analyzer.analyze()
 
 if __name__ == "__main__":

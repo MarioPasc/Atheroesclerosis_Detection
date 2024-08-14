@@ -19,28 +19,31 @@ class Detection_YOLOv8:
             'epochs': 120,
             'imgsz': 512,
             'save': True,
-            'save_period': -1,
+            'save_period': 1,
             'name': "ateroesclerosis_training",
             'verbose': True,
             'seed': 42,
             'single_cls': True,
             'plots': True,
-            'cos_lr': False,
-            'lr0': 0.00009,
-            'lrf': 0.00598,
-            'momentum': 0.7,
-            'weight_decay': 0.00058,
             'optimizer': 'AdamW',
-            'warmup_epochs': 4.0,
-            'warmup_momentum': 0.54512,
+            'deterministic': True,
+            'cos_lr': True,
+            'amp': True,
+            'dropout': 0.0,
+            'iou': 0.7,
+            'lr0': 2.0e-5,
+            'lrf': 0.00438,
+            'momentum': 0.71169,
+            'weight_decay': 0.00043,
+            'warmup_epochs': 3.9316,
+            'warmup_momentum': 0.2153,
             'warmup_bias_lr': 0.1,
             'label_smoothing': 0.0,
-            'box': 6.58368,
-            'cls': 0.61893,
-            'dfl': 1.41746,
+            'box': 4.29656,
+            'cls': 0.35645,
+            'dfl': 1.98713,
             'pose': 12.0,
             'kobj': 1.0,
-            'dropout': 0.0,
             'augment': False,
             'hsv_h': 0.0,
             'hsv_s': 0.0,
@@ -57,7 +60,7 @@ class Detection_YOLOv8:
             'mixup': 0.0,
             'copy_paste': 0.0,
             'erasing': 0.0,
-            'batch': 8
+            'batch': 16
         }
         params = {**default_params, **hyperparameters}
         self.model.train(**params)
@@ -115,9 +118,9 @@ class Detection_YOLOv8:
 
 def main() -> int:
     model = Detection_YOLOv8(model_path="", yaml_path="./config.yaml")
-    #model.train()
-    #model.val()
-    model.tune()
+    model.train()
+    model.val()
+    #model.tune()
     return 0
 
 if __name__ == "__main__":
