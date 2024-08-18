@@ -1,8 +1,7 @@
-import ultralytics
+import external.ultralytics as ultralytics
 import os
 import glob
 import pandas as pd
-
 
 class Detection_YOLOv8:
 
@@ -66,11 +65,11 @@ class Detection_YOLOv8:
         self.model.train(**params)
         
     def tune(self) -> None:
-        results_tuning = self.model.tune(data=self.yaml_path, epochs=50, iterations=200, save=False, plots=False, val=False,
-                                         name="ateroesclerosis_tuning",seed=42, single_cls=True, cos_lr=True, 
-                                         box = 6.7212, cls = 0.49345, dfl=1.30573, lr0=0.00008, lrf=0.006, momentum=0.7, 
-                                         weight_decay = 0.00045, warmup_epoch = 3.55158, warmup_momentum = 0.54424, imgsz = 512,
-                                         optimizer = 'AdamW', augment=False, 
+        results_tuning = self.model.tune(data=self.yaml_path, epochs=90, iterations=100, save=True, plots=True, val=True,
+                                         name="ateroesclerosis_tuning",seed=42, single_cls=True, cos_lr=True, deterministic = True,
+                                         box = 3.77048, cls = 0.39766, dfl=1.88035, lr0=2.0e-05, lrf=0.00603, momentum=0.77038, 
+                                         weight_decay = 0.00053, warmup_epochs = 3.40376, warmup_momentum = 0.1909, imgsz = 512,
+                                         optimizer = 'AdamW', augment=False, crop_fraction = 0.0, iou = 0.7, 
                                          hsv_h=0.0, hsv_s=0.0, hsv_v=0.0, degrees=0.0, translate=0.0,
                                          scale=0.0, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.0, 
                                          mosaic=0.0, close_mosaic=0, mixup=0.0, copy_paste=0.0, erasing=0.0)

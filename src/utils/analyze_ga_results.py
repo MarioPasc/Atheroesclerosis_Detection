@@ -18,7 +18,7 @@ class AnalyzerGA:
         for file in os.listdir(self.path):
             if file != 'tune':
                 df = pd.read_csv(os.path.join(self.path,file, 'results.csv'))
-                metrics = df.iloc[49, :]
+                metrics = df.iloc[99, :]
                 metrics.index = [x.strip(" ") for x in metrics.index]
                 metrics_df = metrics.to_frame().T
                 metrics_df['name'] = file  
@@ -84,7 +84,7 @@ class AnalyzerGA:
         self.plot_metrics_vs_name()
 
 def main() -> None:
-    analyzer = AnalyzerGA(detect_path="./data/results/week8/GA_Recall_config/detect")
+    analyzer = AnalyzerGA(detect_path="./data/results/week8/GA_Recall_config/100_epochs")
     analyzer.analyze()
 
 if __name__ == "__main__":
