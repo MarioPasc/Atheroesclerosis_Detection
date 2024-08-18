@@ -1,0 +1,30 @@
+# 120/120 iterations complete ✅ (234254.41s)
+# Results saved to runs/detect/tune
+# Best fitness=0.47937 observed at iteration 58
+# Best fitness metrics are {'metrics/precision(B)': 0.71757, 'metrics/recall(B)': 0.49212, 'metrics/mAP50(B)': 0.63611, 'metrics/mAP50-95(B)': 0.3646, 'val/box_loss': 0.93908, 'val/cls_loss': 2.37893, 'val/dfl_loss': 2.37322, 'fitness': 0.47937}
+# Best fitness model is runs/detect/ateroesclerosis_tuning58
+# Best fitness hyperparameters are printed below.
+
+lr0: 2.0e-05
+lrf: 0.00603
+momentum: 0.77038
+weight_decay: 0.00053
+warmup_epochs: 3.40376
+warmup_momentum: 0.1909
+box: 3.77048
+cls: 0.39766
+dfl: 1.88035
+hsv_h: 0.0
+hsv_s: 0.0
+hsv_v: 0.0
+degrees: 0.0
+translate: 0.0
+scale: 0.0
+shear: 0.0
+perspective: 0.0
+flipud: 0.0
+fliplr: 0.0
+bgr: 0.0
+mosaic: 0.0
+mixup: 0.0
+copy_paste: 0.0
