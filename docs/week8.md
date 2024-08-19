@@ -3,9 +3,7 @@
 ## Objetivos de la Semana
 
 - [X] Ejecución del Algoritmo Genético con nueva función de `fitness` para la mejora del recall
-- [ ] Ajuste de número de épocas e iteraciones algoritmo genético
-- [ ] Comenzar un entrenamiento con todas las clases para establecer una base
-- [ ] Mover el modulo external/ultralytics al servidor del ICAI para hacer una ejecución personalizada de GA priorizando recall
+- [X] Ajuste de número de épocas e iteraciones algoritmo genético
 
 ## Resultados GA: 80 épocas
 
@@ -26,9 +24,9 @@ Para la ejecución del GA con esta nueva función de fitness en el SC Picasso se
 ![data4](../data/results/week8/GA_Recall_config/80_epochs/tune/recall_evolution.png)
 ![data5](../data/results/week8/GA_Recall_config/80_epochs/tune/tune_fitness.png)
 
-Como se puede observar, el recall ofrece una mejora sustancial, llegando a alcanzar un valor de `0.69` en la época 50 de ejecución. Este valor elevado, y que, si se observa la nube de puntos, parece ser un outlier, será tomado con precaución, ya que puede ser el producto de una configuración de pesos y sesgos afortunada en la red, es por esto que se ha probado a ejecutar por 120 épocas la configuración de hiperparámetros obtenida en esta época, con el fin de investigar si presenta una mejora tan optimista como la presentada en estos resultados. 
+Como se puede observar, el recall ofrece una mejora sustancial, llegando a alcanzar un valor de `0.69` en la época 50 de ejecución. Este valor elevado, y que, si se observa la nube de puntos, parece ser un outlier, será tomado con precaución, ya que puede ser el producto de una configuración de pesos y sesgos afortunada en la red, es por esto que se ha probado a ejecutar por 120 épocas la configuración de hiperparámetros obtenida en esta época, con el fin de investigar si presenta una mejora tan optimista como la presentada en estos resultados.
 
-#### Resultados ejecución 120 épocas config83
+### Resultados ejecución 120 épocas config83
 
 ![data5](../data/results/week8/GA_Recall_config/Recall_config_GA/recall_comparison.png)
 ![data5](../data/results/week8/GA_Recall_config/Recall_config_GA/precision_comparison.png)
@@ -60,4 +58,28 @@ Una vez utilizado como punto de partida los hiperparámetros de la configuració
 ![data4](../data/results/week8/GA_Recall_config/100_epochs/tune/recall_evolution.png)
 ![data5](../data/results/week8/GA_Recall_config/100_epochs/tune/tune_fitness.png)
 
-Como se puede observarn, parece que se ha encontrado una meseta durante las 150 iteraciones de ejecución del algoritmo, fluctuando entre diversos valores de fitness que oscilan entre 0.3 y 0.45. Esto podría indicar que este método de ajuste no puede ofrecernos un margen de mejora mucho mayor al que hemos obtenido hasta ahora, encontrando el mejor fitness de la función en la iteración 58, con un valor de recall de 0.49 en la época 100. Se procederá entonces a, utilizando los pesos obtenidos en esa iteración y la configuración de hiperparámetros, realizar un entrenamiento/validación de los resultados. 
+Como se puede observarn, parece que se ha encontrado una meseta durante las 150 iteraciones de ejecución del algoritmo, fluctuando entre diversos valores de fitness que oscilan entre 0.3 y 0.45. Esto podría indicar que este método de ajuste no puede ofrecernos un margen de mejora mucho mayor al que hemos obtenido hasta ahora, encontrando el mejor fitness de la función en la iteración 58, con un valor de recall de 0.49 en la época 100. Se procederá entonces a, utilizando los pesos obtenidos en esa iteración y la configuración de hiperparámetros, realizar un entrenamiento/validación de los resultados.
+
+### Resultados entrenamiento/validación
+
+![data6](../data/results/week9/GA_results_trainval/map_50_95_comparison.png)
+![data7](../data/results/week9/GA_results_trainval/map_50_comparison.png)
+![data8](../data/results/week9/GA_results_trainval/precision_comparison.png)
+![data9](../data/results/week9/GA_results_trainval/recall_comparison.png)
+
+![data10](../data/results/week9/GA_results_trainval/results.png)
+| Metric          |   Mean |   Median |     Q1 |     Q3 |    Min |    Max |    Std |
+|:----------------|-------:|---------:|-------:|-------:|-------:|-------:|-------:|
+| Train precision | 0.7672 |   0.8033 | 0.7136 | 0.8196 | 0.5644 | 0.8485 | 0.0709 |
+| Val precision   | 0.7677 |   0.7706 | 0.7442 | 0.7975 | 0.6674 | 0.8897 | 0.0353 |
+| Train recall    | 0.4345 |   0.4285 | 0.4167 | 0.4504 | 0.2522 | 0.5372 | 0.0292 |
+| Val recall      | 0.2878 |   0.2838 | 0.2725 | 0.2973 | 0.2624 | 0.3559 | 0.0177 |
+| Train map_50    | 0.6259 |   0.6342 | 0.6148 | 0.6383 | 0.5616 | 0.6573 | 0.0176 |
+| Val map_50      | 0.5425 |   0.5452 | 0.536  | 0.5496 | 0.5023 | 0.5912 | 0.0125 |
+| Train map_50_95 | 0.3658 |   0.3729 | 0.3565 | 0.3764 | 0.3185 | 0.3833 | 0.0149 |
+| Val map_50_95   | 0.2819 |   0.2847 | 0.2765 | 0.2876 | 0.251  | 0.3085 | 0.0097 |
+
+Como se puede observar, el rendimiento durante el entrenamiento de la red ha mejorado notablemente, tanto en recall como en las métricas mAP50-95 y mAP50, sin embargo, este rendimiento se ve reducido de manera significativa durante la validación de la red, llegando a recortar el recall hasta la mita de su valor. 
+
+Como se puede observar en la convergencia de las funciones de pérdida, parece que el entrenamiento está lleno de fluctuaciones en `dfl`, mientras que las gráficas de validación también parecen exhibir problemas en la convergencia, llegando a estancarse en valores altos o no disminuir con las épocas.
+

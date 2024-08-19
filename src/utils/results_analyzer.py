@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from typing import List, Dict
+from typing import List
 import numpy as np
 import os
 
@@ -167,5 +167,5 @@ class ComparativeAnalysis:
             f.write(stats_df.to_markdown(index=False))
 
 # Ejemplo de uso
-analysis = ComparativeAnalysis(path_to_results='data/results/week8/GA_Recall_config/Recall_config_GA')
+analysis = ComparativeAnalysis(path_to_results='data/results/week9/GA_results_trainval')
 analysis.plot_comparative_graphs()
