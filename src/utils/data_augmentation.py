@@ -9,33 +9,42 @@ import matplotlib.pyplot as plt
 
 class DataAugmentor:
     def __init__(self, train_path: str, val_path: str, base_output_path: str):
-        
         self.train_df = pd.read_csv(train_path)
         self.val_df = pd.read_csv(val_path)
         self.base_output_path = base_output_path
 
-    def augment_data(self, augmented_lesion_images: int, augmented_nolesion_images: int):
+    def augment_data(self, augmented_lesion_images: int, augmented_nolesion_images: int, ignore_top_n: int = 0):
         # Augment training data
-        self.augment_subset(self.train_df, 'train', augmented_lesion_images, augmented_nolesion_images)
+        self.augment_subset(self.train_df, 'train', augmented_lesion_images, augmented_nolesion_images, ignore_top_n)
         
         # Augment validation data
-        self.augment_subset(self.val_df, 'val', augmented_lesion_images, augmented_nolesion_images)
+        self.augment_subset(self.val_df, 'val', augmented_lesion_images, augmented_nolesion_images, ignore_top_n)
         
         # Generate pre-augmentation and post-augmentation graphs
         self.generate_label_distribution_graph(self.train_df, 'train')
         self.generate_label_distribution_graph(self.val_df, 'val')
 
-    def augment_subset(self, subset_df: pd.DataFrame, dataset_type: str, augmented_lesion_images: int, augmented_nolesion_images: int):
+    def augment_subset(self, subset_df: pd.DataFrame, dataset_type: str, augmented_lesion_images: int, augmented_nolesion_images: int, ignore_top_n: int = 0):
         lesion_images = subset_df[subset_df['LesionLabel'] != 'nolesion']
         nolesion_images = subset_df[subset_df['LesionLabel'] == 'nolesion']
 
         # Calculate distribution of lesion labels
         lesion_label_counts = lesion_images['LesionLabel'].value_counts()
-        
-        # Calculate augmentation factor, giving more weight to minority classes
+
+        # Ensure ignore_top_n is valid
+        if ignore_top_n >= len(lesion_label_counts):
+            raise ValueError(f"Cannot ignore {ignore_top_n} classes when there are only {len(lesion_label_counts)} unique lesion classes.")
+
+        # Exclude the top N most abundant classes from augmentation
+        classes_to_ignore = lesion_label_counts.nlargest(ignore_top_n).index.tolist()
+
+        # Filter out the classes to ignore
+        lesion_label_counts = lesion_label_counts.drop(classes_to_ignore)
+
+        # Calculate the weight for each label with a stronger bias towards minority classes
         total_labels = len(lesion_label_counts)
         total_instances = lesion_label_counts.sum()
-        
+
         # Calculate the weight for each label with a stronger bias towards minority classes
         weights = {label: (total_instances - count)**2 / total_instances**2 for label, count in lesion_label_counts.items()}
         
