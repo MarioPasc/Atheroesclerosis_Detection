@@ -2,7 +2,7 @@
 
 ## Objetivos
 
-- [ ] Comenzar un entrenamiento con todas las clases para establecer una base
+- [X] Comenzar un entrenamiento con todas las clases para establecer una base
 - [ ] Mover el modulo external/ultralytics al servidor del ICAI para hacer una ejecución personalizada de GA priorizando recall
 
 ## Entrenamiento con todas las clases
@@ -36,9 +36,9 @@ El conjunto de datos al cual no se ha aplicado una aumentación y, por consecuen
 ![data1](./figures/Dataset_Info/Non_Augmented/images_labels_nolesion_distribution.png)
 ![data2](./figures/Dataset_Info/Non_Augmented/lesion_heatmap.png)
 
-Como se puede observar, se trata de un conjunto desbalanceado en todos los aspectos, tanto en las propias clases de las imágenes con lesión, como en el balance de imágenes con lesión y sin lesión, es por ello que se esperan sesgos evidentes dentro de las predicciones del modelo. 
+Como se puede observar, se trata de un conjunto desbalanceado en todos los aspectos, tanto en las propias clases de las imágenes con lesión, como en el balance de imágenes con lesión y sin lesión, es por ello que se esperan sesgos evidentes dentro de las predicciones del modelo.
 
-### Aumentado 
+### Aumentado
 
 Para construir un conjunto de datos lo suficientemente balanceado se han requerido de dos principales técnicas:
 
@@ -65,10 +65,9 @@ La distribución final de este conjunto de datos es la siguiente:
 
 Como se puede observar, este conjunto de datos tiene una distribución entre clases más equilibrada, asegurando además una distribución más equitativa también entre las imágenes con, y sin lesión.
 
-
 ## Resultados
 
-### Conjunto de Datos Desbalanceado, Hiperparámetros por Defecto, Detección-Clasificación
+### Conjunto de Datos Desbalanceado, Hiperparámetros por Defecto, Detección únicamente
 
 ![data1](../data/results/week9/Baseline_Unbalanced_All_Labels/results.png)
 
@@ -88,4 +87,57 @@ Como se puede observar, este conjunto de datos tiene una distribución entre cla
 | Train map_50_95 | 0.0939 |   0.1003 | 0.0827 | 0.1159 | 0.0041 | 0.1228 | 0.0283 |
 | Val map_50_95   | 0.1084 |   0.1163 | 0.0968 | 0.1336 | 0.0106 | 0.1385 | 0.0305 |
 
-Como se puede observar, no hay una clara convergencia en las funciones de pérdida del modelo. Se nos presenta el mismo problema que cuando solo se usaban las clases más notorias, y es que el recall es bajo, estabilizándose cerca de 0.25, mientras que la precisión es baja, y no parece estabilizarse, pero sí mostrar una tendencia a aumentar. 
+Como se puede observar, no hay una clara convergencia en las funciones de pérdida del modelo. Se nos presenta el mismo problema que cuando solo se usaban las clases más notorias, y es que el recall es bajo, estabilizándose cerca de 0.25, mientras que la precisión es baja, y no parece estabilizarse, pero sí mostrar una tendencia a aumentar.
+
+### Conjunto de Datos Balanceado, Hiperparámetros por Defecto, Detección Únicamente
+
+![data1](../data/results/week9/Augmented_full_train/results.png)
+
+![data1](../data/results/week9/Augmented_full_train/precision_comparison.png)
+![data1](../data/results/week9/Augmented_full_train/recall_comparison.png)
+![data1](../data/results/week9/Augmented_full_train/map_50_comparison.png)
+![data1](../data/results/week9/Augmented_full_train/map_50_95_comparison.png)
+
+| Metric          |   Mean |   Median |     Q1 |     Q3 |    Min |    Max |    Std |
+|:----------------|-------:|---------:|-------:|-------:|-------:|-------:|-------:|
+| Train precision | 0.4947 |   0.5404 | 0.46   | 0.5632 | 0.0678 | 0.6202 | 0.1098 |
+| Val precision   | 0.4976 |   0.541  | 0.4616 | 0.5633 | 0.0661 | 0.6201 | 0.1079 |
+| Train recall    | 0.2541 |   0.2647 | 0.2572 | 0.275  | 0.058  | 0.3311 | 0.0495 |
+| Val recall      | 0.2577 |   0.2652 | 0.2572 | 0.2754 | 0.0376 | 0.3285 | 0.0428 |
+| Train map_50    | 0.2951 |   0.3228 | 0.2657 | 0.3536 | 0.0284 | 0.3764 | 0.079  |
+| Val map_50      | 0.3289 |   0.3674 | 0.2991 | 0.3874 | 0.0293 | 0.4175 | 0.081  |
+| Train map_50_95 | 0.139  |   0.1565 | 0.1168 | 0.1723 | 0.0069 | 0.1878 | 0.0432 |
+| Val map_50_95   | 0.1605 |   0.1842 | 0.1372 | 0.1942 | 0.0116 | 0.2087 | 0.0464 |
+
+Como se puede observar, todas las métricas han mejorado de manera general por el hecho de balancear las clases, sin embargo, esta comparación se podrá observar de manera más detallada en la siguiente sección.
+
+### Comparativa: Sin Aumentación | Aumentación ; Detección únicamente
+
+![data1](../data/results/week9/Comparison_NonAugment_Augment/precision_comparison.png)
+![data1](../data/results/week9/Comparison_NonAugment_Augment/recall_comparison.png)
+![data1](../data/results/week9/Comparison_NonAugment_Augment/map_50_comparison.png)
+![data1](../data/results/week9/Comparison_NonAugment_Augment/map_50_95_comparison.png)
+
+Como se puede observar en las gráficas superiores, el conjunto de datos con aumentación supera en todos los aspectos al que no se le ha aplicado, confirmando que se continuará con este conjunto para todos los futuros ajustes.
+
+### Conjunto de Datos Balanceado, Hiperparámetros por Defecto, Detección-Clasificación
+
+Ajustando el hiperparámetro `single_cls` a `True` se puede permitir a la red clasificar las instancias una vez detectadas. Una vez realizado un entrenamiento con esta opción se puede observar cómo ha desarrollado la red esta tarea:
+
+![data1](../data/results/week9/Labels_Augmented/results.png)
+![data1](../data/results/week9/Labels_Augmented/labels.jpg)
+![data1](../data/results/week9/Labels_Augmented/precision_comparison.png)
+![data1](../data/results/week9/Labels_Augmented/recall_comparison.png)
+![data1](../data/results/week9/Labels_Augmented/map_50_comparison.png)
+![data1](../data/results/week9/Labels_Augmented/map_50_95_comparison.png)
+
+Como se puede observar, de manera general, los resultados empeoran a la hora de calcular las métricas teniendo en cuenta la tarea de clasificación de la lesión de la imagen. Se compararán estos resultados con los del conjunto de datos aumentado con la aumentación aplicada. 
+
+### Comparativa: Detección | Detección-Clasificación ; Conjunto Aumentado
+
+![data1](../data/results/week9/Comparison_Deteccion_Clasificacion/precision_comparison.png)
+![data1](../data/results/week9/Comparison_Deteccion_Clasificacion/recall_comparison.png)
+![data1](../data/results/week9/Comparison_Deteccion_Clasificacion/map_50_comparison.png)
+![data1](../data/results/week9/Comparison_Deteccion_Clasificacion/map_50_95_comparison.png)
+
+Como se puede observar, cargar a la red con la tarea de realizar una detección-clasificación empeora los resultados, es por esto que por ahora la tarea se centrará en la detección, dejando la tarea de clasificación para una posterior red neuronal que será creada específicamente con este objetivo.

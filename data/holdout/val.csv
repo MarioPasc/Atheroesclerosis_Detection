@@ -22,9 +22,7 @@ nolesion,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/
 nolesion,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p1/v6/input/p1_v6_00027.png,nolesion
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00016.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00016.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00017.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00017.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00018.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00018.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00019.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00020.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00020.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00021.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00021.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00022.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00022.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/input/p10_v3_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v3/groundtruth/p10_v3_00023.txt
@@ -56,7 +54,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/input/p10_v6_00031.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/groundtruth/p10_v6_00031.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/input/p10_v6_00033.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/groundtruth/p10_v6_00033.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/input/p10_v6_00034.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/groundtruth/p10_v6_00034.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/input/p10_v6_00035.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/groundtruth/p10_v6_00035.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/input/p10_v6_00036.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/groundtruth/p10_v6_00036.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/input/p10_v6_00037.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p10/v6/groundtruth/p10_v6_00037.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p11/v4/input/p11_v4_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p11/v4/groundtruth/p11_v4_00019.txt
@@ -74,7 +71,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00022.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00022.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00023.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00024.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00024.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00026.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00026.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00028.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00028.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00029.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00029.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/input/p12_v8_00030.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p12/v8/groundtruth/p12_v8_00030.txt
@@ -212,7 +208,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17/v18/input/p17_v18_00017.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17/v18/groundtruth/p17_v18_00017.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17/v18/input/p17_v18_00024.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17/v18/groundtruth/p17_v18_00024.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17/v18/input/p17_v18_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p17/v18/groundtruth/p17_v18_00025.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00018.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00018.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00019.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00020.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00020.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00021.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00021.txt
@@ -226,10 +221,8 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00029.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00029.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00030.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00030.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00031.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00031.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00032.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00032.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00033.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00033.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00034.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00034.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00035.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00035.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00036.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00036.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00037.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00037.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/input/p18_v3_00038.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v3/groundtruth/p18_v3_00038.txt
@@ -262,7 +255,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00019.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00020.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00020.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00021.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00021.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00023.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00024.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00024.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00025.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/input/p18_v10_00026.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p18/v10/groundtruth/p18_v10_00026.txt
@@ -416,7 +408,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/input/p22_v4_00024.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/groundtruth/p22_v4_00024.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/input/p22_v4_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/groundtruth/p22_v4_00025.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/input/p22_v4_00026.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/groundtruth/p22_v4_00026.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/input/p22_v4_00027.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/groundtruth/p22_v4_00027.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/input/p22_v4_00028.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/groundtruth/p22_v4_00028.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/input/p22_v4_00030.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v4/groundtruth/p22_v4_00030.txt
 p70_90,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v14/input/p22_v14_00020.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p22/v14/groundtruth/p22_v14_00020.txt
@@ -459,7 +450,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00003.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00003.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00004.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00004.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00005.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00005.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00011.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00011.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00012.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00012.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00013.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00013.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/input/p23_v16_00014.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p23/v16/groundtruth/p23_v16_00014.txt
@@ -523,7 +513,6 @@ p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p2
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v3/input/p24_v3_00045.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v3/groundtruth/p24_v3_00045.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/input/p24_v16_00014.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/groundtruth/p24_v16_00014.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/input/p24_v16_00015.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/groundtruth/p24_v16_00015.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/input/p24_v16_00016.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/groundtruth/p24_v16_00016.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/input/p24_v16_00017.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/groundtruth/p24_v16_00017.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/input/p24_v16_00018.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/groundtruth/p24_v16_00018.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/input/p24_v16_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p24/v16/groundtruth/p24_v16_00019.txt
@@ -726,7 +715,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/input/p31_v4_00022.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/groundtruth/p31_v4_00022.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/input/p31_v4_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/groundtruth/p31_v4_00023.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/input/p31_v4_00024.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/groundtruth/p31_v4_00024.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/input/p31_v4_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/groundtruth/p31_v4_00025.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/input/p31_v4_00027.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/groundtruth/p31_v4_00027.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/input/p31_v4_00028.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p31/v4/groundtruth/p31_v4_00028.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p33/v1/input/p33_v1_00013.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p33/v1/groundtruth/p33_v1_00013.txt
@@ -751,7 +739,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00021.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00021.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00022.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00022.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00023.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00025.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00026.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00026.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00027.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00027.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/input/p34_v2_00028.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v2/groundtruth/p34_v2_00028.txt
@@ -792,7 +779,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00025.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00026.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00026.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00027.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00027.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00028.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00028.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00029.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00029.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00031.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00031.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/input/p34_v11_00032.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p34/v11/groundtruth/p34_v11_00032.txt
@@ -962,7 +948,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00017.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00017.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00018.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00018.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00019.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00020.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00020.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00021.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00021.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00022.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00022.txt
 p20_50,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/input/p41_v9_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p41/v9/groundtruth/p41_v9_00023.txt
@@ -1070,8 +1055,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00019.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00019.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00020.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00020.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00021.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00021.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00022.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00022.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00023.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00023.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00024.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00024.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00025.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00025.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/input/p6_v6_00027.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p6/v6/groundtruth/p6_v6_00027.txt
@@ -1129,7 +1112,6 @@ p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/input/p8_v13_00044.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/groundtruth/p8_v13_00044.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/input/p8_v13_00047.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/groundtruth/p8_v13_00047.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/input/p8_v13_00049.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/groundtruth/p8_v13_00049.txt
-p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/input/p8_v13_00053.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/groundtruth/p8_v13_00053.txt
 p0_20,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/input/p8_v13_00054.png,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v13/groundtruth/p8_v13_00054.txt
 nolesion,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v6/input/p8_v6_00017.png,nolesion
 nolesion,/home/mariopasc/Python/Datasets/Coronariografias/CADICA/selectedVideos/p8/v6/input/p8_v6_00018.png,nolesion

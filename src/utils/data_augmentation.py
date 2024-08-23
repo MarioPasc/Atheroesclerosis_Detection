@@ -125,14 +125,14 @@ class DataAugmentor:
 
     @staticmethod
     def random_brightness(img: np.ndarray) -> np.ndarray:
-        value = random.uniform(0.8, 1.2)
+        value = random.uniform(0.7, 1.35)
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         hsv[:, :, 2] = cv2.multiply(hsv[:, :, 2], value)
         return cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 
     @staticmethod
     def random_contrast(img: np.ndarray) -> np.ndarray:
-        alpha = random.uniform(0.85, 1.15)
+        alpha = random.uniform(0.75, 1.20)
         new_img = cv2.addWeighted(img, alpha, np.zeros(img.shape, img.dtype), 0, 0)
         return new_img
 

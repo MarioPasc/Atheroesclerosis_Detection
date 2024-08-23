@@ -75,16 +75,19 @@ class Detection_YOLOv8:
             'mixup': 0.0,
             'copy_paste': 0.0,
             'erasing': 0.0,
+            'crop_fraction': 0.0, 
+            'auto_augment': "",
+            'bgr': 0.0, 
         }
         params = {**default_params, **hyperparameters}
         self.model.train(**params)
         
     def tune(self) -> None:
-        results_tuning = self.model.tune(data=self.yaml_path, epochs=90, iterations=100, save=True, plots=True, val=True,
+        results_tuning = self.model.tune(data=self.yaml_path, epochs=100, iterations=100, save=True, plots=True, val=True,
                                          name="ateroesclerosis_tuning",seed=42, single_cls=True, cos_lr=True, deterministic = True,
-                                         box = 3.77048, cls = 0.39766, dfl=1.88035, lr0=2.0e-05, lrf=0.00603, momentum=0.77038, 
-                                         weight_decay = 0.00053, warmup_epochs = 3.40376, warmup_momentum = 0.1909, imgsz = 512,
-                                         optimizer = 'AdamW', augment=False, crop_fraction = 0.0, iou = 0.7, 
+                                         box = 7.5, cls = 0.5, dfl=1.5, lr0=0.01, lrf=0.01, momentum=0.937, 
+                                         weight_decay = 0.0005, warmup_epochs = 3, warmup_momentum = 0.8, imgsz = 640,
+                                         optimizer = 'Adam', augment=False, crop_fraction = 0.0, iou = 0.5, 
                                          hsv_h=0.0, hsv_s=0.0, hsv_v=0.0, degrees=0.0, translate=0.0,
                                          scale=0.0, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.0, 
                                          mosaic=0.0, close_mosaic=0, mixup=0.0, copy_paste=0.0, erasing=0.0)
@@ -120,8 +123,8 @@ class Detection_YOLOv8:
                 "weight": os.path.basename(weight),
                 "precision": precision_b,
                 "recall": recall_b,
-                "map_05": map_05_b,
-                "map_05_95": map_05_95_b
+                "map_50": map_05_b,
+                "map_50_95": map_05_95_b
             })
 
         # Save results to a CSV file

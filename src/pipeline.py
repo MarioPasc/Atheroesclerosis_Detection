@@ -48,8 +48,8 @@ def main():
     print('Applying data undersampling ...')
     holdout_directory = './data/holdout'
     class_undersampling = {
-        "p0_20": [40, 12, 0], # 40% ignored in train, 12% ignored in val, 0% ignored in test 
-        "p20_50": [10, 0, 0]  # 10% ignored in train, 0% ignored in val, 0% ignored in test  
+        "p0_20": [46, 17, 0], # 46% ignored in train, 12% ignored in val, 0% ignored in test 
+        "p20_50": [15, 0, 0]  # 10% ignored in train, 0% ignored in val, 0% ignored in test  
     }
     data_undersampling(holdout_directory=holdout_directory, class_undersampling=class_undersampling)
 
@@ -58,8 +58,8 @@ def main():
     augmented_output = '/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Augmented'
     data_augmentation(train_csv='./data/holdout/train.csv', val_csv='./data/holdout/val.csv',
                       augmented_output= augmented_output,
-                      augmented_lesion_images=800, augmented_nolesion_images=500, 
-                      ignore_top_n=1)
+                      augmented_lesion_images=900, augmented_nolesion_images=550, 
+                      ignore_top_n=2)
     print('Processing YOLOv8 Dataset')
     dataset_dir='/home/mariopasc/Python/Datasets/Coronariografias/CADICA_Detection_Full'
     generate_dataset(train_csv=os.path.join(augmented_output, 'full_augmented_train.csv'),
