@@ -271,19 +271,20 @@ class ComparativeResultsModels:
 
             fig.suptitle(f'Comparative Analysis for {titles[metric]}')
             plt.tight_layout(rect=[0, 0, 1, 0.95])
-            plt.savefig(os.path.join(self.save, f'{metric}_comparison.png'))
+            plt.savefig(os.path.join(self.save, f'{metric}_comparison_between.png'))
             plt.show()
 
 def one_analysis() -> None:
-    analysis = ComparativeAnalysis(path_to_results='data/results/week9/Labels_Augmented')
+    analysis = ComparativeAnalysis(path_to_results='data/results/week10/YOLOv9_baseline')
     analysis.plot_comparative_graphs()
 
 def two_analysis() -> None:
     comparative = ComparativeResultsModels('data/results/week9/Augmented_full_train', 
-                                           'data/results/week9/Labels_Augmented', 
-                                           ['Detección', 'Detección-Clasificación'],
-                                           save = 'data/results/week9/Comparison_Deteccion_Clasificacion')
+                                           'data/results/week10/YOLOv9_baseline', 
+                                           ['YOLOv8', 'YOLOv9'],
+                                           save = 'data/results/week10/YOLOv9_baseline')
     comparative.plot_comparisons()
 
 if __name__ == '__main__':
+    one_analysis()
     two_analysis()

@@ -3,7 +3,6 @@
 ## Objetivos
 
 - [X] Comenzar un entrenamiento con todas las clases para establecer una base
-- [ ] Mover el modulo external/ultralytics al servidor del ICAI para hacer una ejecución personalizada de GA priorizando recall
 
 ## Entrenamiento con todas las clases
 
@@ -141,3 +140,33 @@ Como se puede observar, de manera general, los resultados empeoran a la hora de 
 ![data1](../data/results/week9/Comparison_Deteccion_Clasificacion/map_50_95_comparison.png)
 
 Como se puede observar, cargar a la red con la tarea de realizar una detección-clasificación empeora los resultados, es por esto que por ahora la tarea se centrará en la detección, dejando la tarea de clasificación para una posterior red neuronal que será creada específicamente con este objetivo.
+
+## YOLOv9
+
+Se ha realizado un entrenamiento base con YOLOv9 con la finalidad de comparar su rendimiento con YOLOv8 con este conjunto de datos. Los resultados individuales de YOLOv9 son los siguientes:
+
+| Metric          |   Mean |   Median |     Q1 |     Q3 |    Min |    Max |    Std |
+|:----------------|-------:|---------:|-------:|-------:|-------:|-------:|-------:|
+| Train precision | 0.4356 |   0.4757 | 0.4334 | 0.4943 | 0.0025 | 0.5576 | 0.12   |
+| Val precision   | 0.4476 |   0.4783 | 0.4413 | 0.4916 | 0.0058 | 0.6471 | 0.1058 |
+| Train recall    | 0.302  |   0.2981 | 0.2812 | 0.3275 | 0.0582 | 0.7229 | 0.0704 |
+| Val recall      | 0.2973 |   0.2979 | 0.2829 | 0.3244 | 0.0583 | 0.4797 | 0.0549 |
+| Train map_50    | 0.29   |   0.3125 | 0.2965 | 0.3278 | 0.005  | 0.3764 | 0.0786 |
+| Val map_50      | 0.316  |   0.3355 | 0.3174 | 0.3516 | 0.0043 | 0.4015 | 0.0768 |
+| Train map_50_95 | 0.131  |   0.1421 | 0.1297 | 0.1511 | 0.0018 | 0.1806 | 0.0382 |
+| Val map_50_95   | 0.1488 |   0.1583 | 0.1477 | 0.1692 | 0.0018 | 0.2121 | 0.0397 |
+
+![data1](../data/results/week10/YOLOv9_baseline/results.png)
+![data1](../data/results/week10/YOLOv9_baseline/precision_comparison.png)
+![data1](../data/results/week10/YOLOv9_baseline/recall_comparison.png)
+![data1](../data/results/week10/YOLOv9_baseline/map_50_comparison.png)
+![data1](../data/results/week10/YOLOv9_baseline/map_50_95_comparison.png)
+
+Como se puede observar, YOLOv9 parece haber obtendo unos resultados ligeramente superiores en cuanto a recall con la configuración base, compartida con YOLOv8. Esta comparación se verá apoyada con las siguientes gráficas:
+
+![data1](../data/results/week10/YOLOv9_baseline/precision_comparison_between.png)
+![data1](../data/results/week10/YOLOv9_baseline/recall_comparison_between.png)
+![data1](../data/results/week10/YOLOv9_baseline/map_50_comparison_between.png)
+![data1](../data/results/week10/YOLOv9_baseline/map_50_95_comparison_between.png)
+
+Como se puede observar, YOLOv9 ha obtenido un mejor rendimiento en recall, aunque el intercambio por ello ha sido disminuir su precisión ligeramente. Se propondrá un ajuste de ambos modelos mediante el GA de Ultralytics para comprobar cuál es su capacidad máxima. 
