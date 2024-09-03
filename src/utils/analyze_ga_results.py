@@ -84,7 +84,7 @@ class AnalyzerGA:
         self.plot_metrics_vs_name()
 
 def main() -> None:
-    analyzer = AnalyzerGA(detect_path="./data/results/week8/GA_Recall_config/100_epochs")
+    analyzer = AnalyzerGA(detect_path="./data/results/week11/YOLOv8_tuning_ga1")
     analyzer.analyze()
 
 if __name__ == "__main__":

@@ -166,7 +166,7 @@ class ComparativeAnalysis:
         with open(f"{self.path_to_results}/metrics_statistics.md", 'w') as f:
             f.write(stats_df.to_markdown(index=False))
 
-class ComparativeResultsModels:
+class ComparativeResultsModels2:
     def __init__(self, path_to_results_model1: str, path_to_results_model2: str, model_names: list, save: str) -> None:
         """
         Constructor para la clase ComparativeResultsModels.
@@ -274,17 +274,141 @@ class ComparativeResultsModels:
             plt.savefig(os.path.join(self.save, f'{metric}_comparison_between.png'))
             plt.show()
 
+class ComparativeResultsModels3:
+    def __init__(self, path_to_results_model1: str, path_to_results_model2: str, path_to_results_model3: str, model_names: list, save: str) -> None:
+        """
+        Constructor para la clase ComparativeResultsModels.
+
+        :param path_to_results_model1: Ruta de la carpeta con los archivos CSV de resultados del modelo 1.
+        :param path_to_results_model2: Ruta de la carpeta con los archivos CSV de resultados del modelo 2.
+        :param path_to_results_model3: Ruta de la carpeta con los archivos CSV de resultados del modelo 3.
+        :param model_names: Lista con los nombres de los tres modelos para etiquetar los gráficos.
+        :param save: Ruta donde se guardarán los gráficos generados.
+        """
+        assert len(model_names) == 3, "Se deben proporcionar exactamente tres nombres de modelos."
+        
+        self.model_names = model_names
+        self.save = save
+        # Cargar datos de los tres modelos
+        self.train_data_model1 = self.load_data(path_to_results_model1, 'results.csv')
+        self.val_data_model1 = self.load_data(path_to_results_model1, 'validation_results.csv', is_validation=True)
+        self.train_data_model2 = self.load_data(path_to_results_model2, 'results.csv')
+        self.val_data_model2 = self.load_data(path_to_results_model2, 'validation_results.csv', is_validation=True)
+        self.train_data_model3 = self.load_data(path_to_results_model3, 'results.csv')
+        self.val_data_model3 = self.load_data(path_to_results_model3, 'validation_results.csv', is_validation=True)
+        
+    def load_data(self, path: str, filename: str, is_validation: bool = False) -> pd.DataFrame:
+        """
+        Carga los datos desde un archivo CSV y realiza el preprocesamiento necesario.
+
+        :param path: Ruta de la carpeta donde se encuentra el archivo CSV.
+        :param filename: Nombre del archivo CSV a cargar.
+        :param is_validation: Indica si el archivo pertenece a resultados de validación.
+        :return: DataFrame con los datos del archivo.
+        """
+        data = pd.read_csv(os.path.join(path, filename))
+        data.columns = data.columns.str.strip()  # Eliminar espacios en los nombres de columnas
+
+        # Ajuste de columnas según nombres esperados
+        if is_validation:
+            rename_map = {
+                'epoch': 'epoch',
+                'precision': 'precision',
+                'recall': 'recall',
+                'map_05': 'map_50',  # Renombrar 'map_05' a 'map_50' para mantener consistencia
+                'map_05_95': 'map_50_95'  # Renombrar 'map_05_95' a 'map_50_95' para mantener consistencia
+            }
+        else:
+            rename_map = {
+                'epoch': 'epoch',
+                'metrics/precision(B)': 'precision',
+                'metrics/recall(B)': 'recall',
+                'metrics/mAP50(B)': 'map_50',
+                'metrics/mAP50-95(B)': 'map_50_95'
+            }
+
+        data.rename(columns=rename_map, inplace=True)
+
+        # Imprimir columnas para diagnóstico
+        print(f"Columnas después de renombrar para {filename}: {data.columns.tolist()}")
+        
+        return data.sort_values(by='epoch')
+    
+    def plot_comparisons(self):
+        """
+        Genera los gráficos comparativos para las métricas seleccionadas.
+        """
+        metrics = ['precision', 'recall', 'map_50', 'map_50_95']
+        titles = {
+            'precision': 'Precision',
+            'recall': 'Recall',
+            'map_50': 'mAP@50',
+            'map_50_95': 'mAP@50-95'
+        }
+
+        for metric in metrics:
+            # Verificar que la métrica exista en los datos antes de intentar graficarla
+            if metric not in self.train_data_model1.columns or metric not in self.val_data_model1.columns:
+                print(f"La métrica {metric} no se encuentra en los datos. Saltando...")
+                continue
+
+            # Calcular el rango máximo de Y para que ambos subplots tengan el mismo rango
+            max_y = max(
+                self.train_data_model1[metric].max(),
+                self.val_data_model1[metric].max(),
+                self.train_data_model2[metric].max(),
+                self.val_data_model2[metric].max(),
+                self.train_data_model3[metric].max(),
+                self.val_data_model3[metric].max()
+            )
+            min_y = 0  
+
+            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+            
+            # Subplot para los datos de entrenamiento
+            ax1.plot(self.train_data_model1['epoch'], self.train_data_model1[metric], label=self.model_names[0], color='b')
+            ax1.plot(self.train_data_model2['epoch'], self.train_data_model2[metric], label=self.model_names[1], color='r')
+            ax1.plot(self.train_data_model3['epoch'], self.train_data_model3[metric], label=self.model_names[2], color='g')
+            ax1.set_title(f'Train {titles[metric]}')
+            ax1.set_xlabel('Epoch')
+            ax1.set_ylabel(metric)
+            ax1.set_ylim([min_y, max_y])
+            ax1.legend()
+
+            # Subplot para los datos de validación
+            ax2.plot(self.val_data_model1['epoch'], self.val_data_model1[metric], label=self.model_names[0], color='b')
+            ax2.plot(self.val_data_model2['epoch'], self.val_data_model2[metric], label=self.model_names[1], color='r')
+            ax2.plot(self.val_data_model3['epoch'], self.val_data_model3[metric], label=self.model_names[2], color='g')
+            ax2.set_title(f'Validation {titles[metric]}')
+            ax2.set_xlabel('Epoch')
+            ax2.set_ylabel(metric)
+            ax2.set_ylim([min_y, max_y])
+            ax2.legend()
+
+            fig.suptitle(f'Comparative Analysis for {titles[metric]}')
+            plt.tight_layout(rect=[0, 0, 1, 0.95])
+            plt.savefig(os.path.join(self.save, f'{metric}_comparison_between.png'))
+            plt.show()
+
 def one_analysis() -> None:
-    analysis = ComparativeAnalysis(path_to_results='data/results/week10/YOLOv9_baseline')
+    analysis = ComparativeAnalysis(path_to_results='data/results/week10/YOLOv10_baseline')
     analysis.plot_comparative_graphs()
 
 def two_analysis() -> None:
-    comparative = ComparativeResultsModels('data/results/week9/Augmented_full_train', 
+    comparative = ComparativeResultsModels2('data/results/week9/Augmented_full_train', 
                                            'data/results/week10/YOLOv9_baseline', 
                                            ['YOLOv8', 'YOLOv9'],
                                            save = 'data/results/week10/YOLOv9_baseline')
     comparative.plot_comparisons()
 
+def three_analysis() -> None:
+    comparative = ComparativeResultsModels3(path_to_results_model1='data/results/week9/Augmented_full_train', 
+                                           path_to_results_model2='data/results/week10/YOLOv9_baseline', 
+                                           path_to_results_model3='data/results/week10/YOLOv10_baseline',
+                                           model_names=['YOLOv8', 'YOLOv9', 'YOLOv10'],
+                                           save = 'data/results/week10/YOLOv10_baseline')
+    comparative.plot_comparisons()
+
 if __name__ == '__main__':
-    one_analysis()
-    two_analysis()
+    
+    three_analysis()
