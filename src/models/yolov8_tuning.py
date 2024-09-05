@@ -16,24 +16,50 @@ class Detection_YOLOv8:
         # Merge default hyperparameters with the provided ones
         default_params = {
             'data': self.yaml_path,
-            'epochs': 120,
-            'imgsz': 512,
+            'epochs': 80,
+            'time': None,
+            'patience': 100,
+            'batch':16,
+            'imgsz': 640,
             'save': True,
-            'save_period': -1,
+            'save_period': 1,
+            'cache': False,
+            'device': None,
+            'workers': 8,
+            'project': None,
             'name': "ateroesclerosis_training",
+            'exist_ok': False,
+            'pretrained': True,
             'verbose': True,
             'seed': 42,
-            'single_cls': True,
-            'plots': True,
+            'deterministic': True,
+            'single_cls': False, # Desactivamos esta opción para ver cómo afecta el balanceo de datos
+            'rect': False,
             'cos_lr': True,
-            'lr0': 0.0001,
+            'resume': False,
+            'amp': True,
+            'fraction': 1.0,
+            'profile': False,
+            'freeze': None,
+            'plots': True,
+            'optimizer': 'Adam',
+            'iou': 0.5, # YOLO lo tiene por defecto en .7, lo dejaremos en .5 como estándar
+            'lr0': 0.01,
             'lrf': 0.01,
-            'momentum': 0.85,
-            'weight_decay': 0.001,
-            'optimizer': 'AdamW',
-            'warmup_epochs': 1,
-            'label_smoothing': 0.1,
-            'dropout': 0.05,
+            'momentum': 0.937,
+            'weight_decay': 0.0005,
+            'warmup_epochs': 3,
+            'warmup_momentum': 0.8,
+            'warmup_bias_lr': 0.1,
+            'label_smoothing': 0.0,
+            'box': 7.5,
+            'cls': 0.5,
+            'dfl': 1.5,
+            'pose': 12.0,
+            'kobj': 1.0,
+            'dropout': 0.0,
+            'val': True,
+            # Augmentation parameters, set to False
             'augment': False,
             'hsv_h': 0.0,
             'hsv_s': 0.0,
@@ -50,7 +76,9 @@ class Detection_YOLOv8:
             'mixup': 0.0,
             'copy_paste': 0.0,
             'erasing': 0.0,
-            'batch': 4
+            'crop_fraction': 0.0, 
+            'auto_augment': "",
+            'bgr': 0.0, 
         }
         params = {**default_params, **hyperparameters}
         self.model.train(**params)
@@ -108,8 +136,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 def send_email(subject: str, body: str, to_email: str):
-    from_email = "mario.pg02@gmail.com"  # Cambia esto por tu correo
-    from_password = "dddw jysk gbaj knhm "  # Cambia esto por tu contraseña
+    from_email = "mario.pg02@gmail.com"  
+    from_password = "dddw jysk gbaj knhm "  
 
     msg = MIMEMultipart()
     msg['From'] = from_email
@@ -177,23 +205,31 @@ def main() -> int:
     detection_model = Detection_YOLOv8(model_path="", yaml_path="./config.yaml")
     tuner = YOLOv8_Tuning(detection_model)
 
-    lr0_values = [0.00005, 0.000075]
+    lr0_values = [0.001, 0.005, 0.01, 0.015, 0.02]
     momentum_values = [0.6, 0.65, 0.7, 0.72, 0.75, 0.78]
     lrf_values = [0.01, 0.025, 0.05, 0.075, 0.1, 0.25]
 
     # Train with different lr0 values
-    #tuner.train_with_different_lr0(lr0_values)
-
-    # Train with different momentum values
-    #tuner.train_with_different_momentum(momentum_values)
-        # Send email after training
-    # Train with different lrf values
-    tuner.train_with_different_lrf(lrf_values)
+    tuner.train_with_different_lr0(lr0_values)
     send_email(
-        subject="Training LRF Complete",
-        body="The training with different LRF values has been completed.",
+        subject="Training LR0 Complete",
+        body="The training with different LR0 values has been completed.",
         to_email="mario.pg02@gmail.com"  
     )
+    # Train with different momentum values
+    #tuner.train_with_different_momentum(momentum_values)
+    #send_email(
+    #    subject="Training Momentum Complete",
+    #    body="The training with different Momentum values has been completed.",
+    #    to_email="mario.pg02@gmail.com"  
+    #)
+    # Train with different lrf values
+    #tuner.train_with_different_lrf(lrf_values)
+    #send_email(
+    #    subject="Training LRF Complete",
+    #    body="The training with different LRF values has been completed.",
+    #    to_email="mario.pg02@gmail.com"  
+    #)
 
 if __name__ == "__main__":
     main()

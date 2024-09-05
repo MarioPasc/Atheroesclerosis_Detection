@@ -1,4 +1,4 @@
-path: /home/mariopasc/x2go_shared/Augmented_4types_CADICA_Detection
+path: /home/mariopasc/x2go_shared/Datasets/CADICA_Augmented_Labels_Deteccion/CADICA_Detection_Full
 train: images/train  
 val: images/val  
 test:  images/test

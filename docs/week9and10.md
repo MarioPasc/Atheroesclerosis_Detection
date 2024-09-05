@@ -130,7 +130,7 @@ Ajustando el hiperparámetro `single_cls` a `True` se puede permitir a la red cl
 ![data1](../data/results/week9/Labels_Augmented/map_50_comparison.png)
 ![data1](../data/results/week9/Labels_Augmented/map_50_95_comparison.png)
 
-Como se puede observar, de manera general, los resultados empeoran a la hora de calcular las métricas teniendo en cuenta la tarea de clasificación de la lesión de la imagen. Se compararán estos resultados con los del conjunto de datos aumentado con la aumentación aplicada. 
+Como se puede observar, de manera general, los resultados empeoran a la hora de calcular las métricas teniendo en cuenta la tarea de clasificación de la lesión de la imagen. Se compararán estos resultados con los del conjunto de datos aumentado con la aumentación aplicada.
 
 ### Comparativa: Detección | Detección-Clasificación ; Conjunto Aumentado
 
@@ -192,9 +192,20 @@ El último modelo del SOTA actual es YOLOv10. Se ha realizado un entrenamiento/v
 ![data1](../data/results/week10/YOLOv10_baseline/map_50_comparison.png)
 ![data1](../data/results/week10/YOLOv10_baseline/map_50_95_comparison.png)
 
-Como se puede observar, el rendimiento de este modelo se asemeja más al rendimiento de YOLOv8, exhibiendo unas métricas ligeramente más bajas que YOLOv9. Esto se verá mejor en la siguiente comparativa:
+Como se puede observar, el rendimiento de este modelo se asemeja más al rendimiento de YOLOv8, exhibiendo una métrica de recall ligeramente más bajas que YOLOv9. Esto se verá mejor en la siguiente comparativa:
 
 ![data1](../data/results/week10/YOLOv10_baseline/precision_comparison_between.png)
 ![data1](../data/results/week10/YOLOv10_baseline/recall_comparison_between.png)
 ![data1](../data/results/week10/YOLOv10_baseline/map_50_comparison_between.png)
 ![data1](../data/results/week10/YOLOv10_baseline/map_50_95_comparison_between.png)
+
+| Metric          | YOLOv8 | YOLOv9 | YOLOv10 |
+|:----------------|:------:|:------:|:-------:|
+| Train precision | 0.4183 | 0.4356 | 0.4779  |
+| Val precision   | 0.4085 | 0.4476 | 0.4613  |
+| Train recall    | 0.2271 | 0.3020 | 0.2255  |
+| Val recall      | 0.2372 | 0.2973 | 0.2309  |
+| Train map_50    | 0.2399 | 0.2900 | 0.2652  |
+| Val map_50      | 0.2655 | 0.3160 | 0.2952  |
+| Train map_50_95 | 0.0939 | 0.1310 | 0.1411  |
+| Val map_50_95   | 0.1084 | 0.1488 | 0.1625  |

@@ -74,7 +74,7 @@ class FineTuningAnalyzer:
             f.write(markdown_table)
 
 def main():
-    results_folder = "./data/results/week7/finetuning_lrf"
+    results_folder = "./data/results/week11/Tune_lr0_yolov8"
     analyzer = FineTuningAnalyzer(results_folder=results_folder)
     analyzer.plot_results()
     analyzer.save_metrics_summary()
