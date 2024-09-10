@@ -1,6 +1,9 @@
 import optuna
 from ultralytics import YOLO
 from typing import Dict, Tuple, List
+import pandas as pd
+
+from yolo_tuning import send_email
 
 # Global default parameters for YOLO training
 default_params = {
@@ -100,6 +103,7 @@ class BHOYOLO:
         self.yaml_path = data  # Store dataset path
         self.epochs = epochs
         self.img_size = img_size
+        self.results = []  # List to store results for each trial
 
     def _extract_hyperparameters(self, trial) -> Dict[str, float]:
         """
@@ -131,18 +135,17 @@ class BHOYOLO:
         Objective function that trains the YOLO model with the suggested hyperparameters and returns the mAP50-95.
 
         params:
-            - trial: The Optuna trial object to suggest hyperparameters
+            - trial: The Optuna trial object to suggest hyperparameters.
 
         returns:
-            - mAP50-95: The validation metric (mAP) after training
+            - mAP50-95: The validation metric (mAP) after training.
         """
-
         # Extract hyperparameters for the trial
         hyperparams = self._extract_hyperparameters(trial)
-        
+
         # Merge with default_params
         params = {**default_params, **hyperparams}
-        params['data'] = self.yaml_path  # Ensure the dataset path is correct
+        params['data'] = self.yaml_path
         params['epochs'] = self.epochs
 
         # Initialize the YOLO model
@@ -151,8 +154,15 @@ class BHOYOLO:
         # Train the model using the merged hyperparameters
         results = model.train(**params)
 
-        # Retrieve the mAP50-95 from results
-        map_50_95 = results.box.map 
+        # Retrieve relevant metrics
+        precision_b = results.box.mp
+        recall_b = results.box.mr
+        map_50_b = results.box.map50
+        map_50_95 = results.box.map
+
+        # Save the current hyperparameters and metrics in the results list
+        trial_results = {**hyperparams, 'precision': precision_b, 'recall': recall_b, 'mAP50': map_50_b, 'mAP50-95': map_50_95}
+        self.results.append(trial_results)
 
         # Log intermediate values for the trial
         trial.report(map_50_95, step=self.epochs)
@@ -163,26 +173,58 @@ class BHOYOLO:
 
         return map_50_95
 
-    def optimize(self, n_trials: int = 50) -> None:
+    def optimize(self, n_trials: int = 50, save_plots: bool = True) -> None:
         """
-        Runs the Bayesian Optimization for the defined number of trials.
+        Runs the Bayesian Optimization for the defined number of trials and generates visualization plots.
 
         params:
-            - n_trials (int): Number of optimization trials to run
+            - n_trials (int): Number of optimization trials to run.
+            - save_plots (bool): Whether to save visualization plots.
         """
-
         # Create an Optuna study to maximize the mAP50-95
         study = optuna.create_study(direction="maximize")
 
         # Run optimization
         study.optimize(self._train_model, n_trials=n_trials)
 
+        # Save results to a CSV file
+        self._save_results_to_csv()
+
         # Print best results after optimization
         print(f"Best trial mAP50-95: {study.best_trial.value}")
         print(f"Best hyperparameters: {study.best_trial.params}")
 
-        # Optionally, save the study for future reference
+        # Optionally, save the study results to a CSV file
         study.trials_dataframe().to_csv("study_results.csv", index=False)
+
+        # Generate and save plots if requested
+        if save_plots:
+            self._generate_visualizations(study)
+
+    def _save_results_to_csv(self) -> None:
+        """
+        Save the results of each trial (hyperparameters and metrics) to a CSV file.
+        """
+        df = pd.DataFrame(self.results)
+        df.to_csv('hyperparameter_optimization_results.csv', index=False)
+        print("Results saved to hyperparameter_optimization_results.csv")
+
+    def _generate_visualizations(self, study) -> None:
+        """
+        Generates and saves visualizations for the optimization process.
+
+        params:
+            - study: The Optuna study object.
+        """
+        # Contour plot for 2D hyperparameter space exploration
+        contour_fig = optuna.visualization.plot_contour(study)
+        contour_fig.write_image("contour_plot.png")
+
+        # Parallel coordinates plot to visualize hyperparameters and objective values
+        parallel_fig = optuna.visualization.plot_parallel_coordinate(study)
+        parallel_fig.write_image("parallel_coordinate_plot.png")
+
+        print("Visualization plots saved successfully.")
 
 
 def main() -> None:
@@ -191,17 +233,17 @@ def main() -> None:
     
     # Define the hyperparameter search space
     hyperparameters = {
-        ('lr0', 'log'): [1e-6, 1e-3],
-        ('momentum', 'uniform'): [0.55, 0.95],
-        ('weight_decay', 'log'): [1e-5, 1e-2]
+        ('lr0', 'log'): [5e-6, 1e-5],
+        ('momentum', 'uniform'): [0.45, 0.65]
     }
 
     # Instantiate the BHOYOLO class
-    bho_yolo = BHOYOLO(model=model, hyperparameters=hyperparameters, data=data, epochs=3)
+    bho_yolo = BHOYOLO(model=model, hyperparameters=hyperparameters, data=data, epochs=80)
 
-    # Run optimization
-    bho_yolo.optimize(n_trials=5)  # Adjust the number of trials as needed
+    # Run optimization and save visualizations
+    bho_yolo.optimize(n_trials=15, save_plots=True)  # Adjust the number of trials as needed
 
+    send_email(subject="BHO Finished", body="BHO training has finished", to_email="mario.pg02@gmail.com")
 
 if __name__ == "__main__":
     main()
