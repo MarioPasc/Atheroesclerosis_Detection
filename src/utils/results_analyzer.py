@@ -4,7 +4,7 @@ import seaborn as sns
 from typing import List
 import numpy as np
 import os
-
+import scienceplots
 class ComparativeAnalysis:
     def __init__(self, path_to_results: str) -> None:
         """
@@ -390,6 +390,88 @@ class ComparativeResultsModels3:
             plt.savefig(os.path.join(self.save, f'{metric}_comparison_between.png'))
             plt.show()
 
+class ComparativeResultsModels:
+    def __init__(self, model_paths: list, model_names: list, plot_styles: list, save_path: str) -> None:
+        """
+        Constructor for the ComparativeResultsModels class.
+
+        :param model_paths: List of paths to the 'results.csv' files for each model.
+        :param model_names: List of model names for labeling the plots.
+        :param plot_styles: List of dictionaries with plot styles (linestyle, color, alpha) for each model.
+        :param save_path: Path where the plots will be saved.
+        """
+        assert len(model_paths) == len(model_names) == len(plot_styles), "Ensure that model_paths, model_names, and plot_styles have the same length."
+
+        self.model_names = model_names
+        self.plot_styles = plot_styles
+        self.save_path = save_path
+
+        # Load data for each model
+        self.model_data = [self.load_data(path) for path in model_paths]
+
+    def load_data(self, path: str) -> pd.DataFrame:
+        """
+        Loads data from a CSV file and processes it.
+
+        :param path: Path to the CSV file.
+        :return: DataFrame with the loaded data.
+        """
+        data = pd.read_csv(path)
+        data.columns = data.columns.str.strip()  # Remove any leading/trailing spaces
+        rename_map = {
+            'epoch': 'epoch',
+            'metrics/precision(B)': 'precision',
+            'metrics/recall(B)': 'recall',
+            'metrics/mAP50(B)': 'map_50',
+            'metrics/mAP50-95(B)': 'map_50_95'
+        }
+        data.rename(columns=rename_map, inplace=True)
+        return data.sort_values(by='epoch')
+
+    def plot_comparisons(self):
+        """
+        Generates individual plots for precision, recall, mAP@50, and mAP@50-95 metrics.
+        Filters the data to only include the first 80 epochs for each model and applies custom line thickness.
+        """
+        metrics = ['precision', 'recall', 'map_50', 'map_50_95']
+        titles = {
+            'precision': 'Precision',
+            'recall': 'Recall',
+            'map_50': 'mAP@50',
+            'map_50_95': 'mAP@50-95'
+        }
+
+        # Limit to the first 80 epochs for each model
+        max_epochs = 80
+
+        for metric in metrics:
+            plt.figure(figsize=(10, 6))
+
+            for idx, data in enumerate(self.model_data):
+                # Filter data to include only the first 80 epochs
+                filtered_data = data[data['epoch'] <= max_epochs]
+
+                if metric in filtered_data.columns:
+                    # Plot with the provided styles for each model, including linewidth
+                    plt.plot(
+                        filtered_data['epoch'], filtered_data[metric], 
+                        label=self.model_names[idx], 
+                        linestyle=self.plot_styles[idx].get('linestyle', '-'), 
+                        color=self.plot_styles[idx].get('color', None), 
+                        alpha=self.plot_styles[idx].get('alpha', 1.0), 
+                        linewidth=self.plot_styles[idx].get('linewidth', 2.0)  # Default to linewidth=2.0 if not specified
+                    )
+                else:
+                    print(f"{metric} not found in model {self.model_names[idx]}. Skipping...")
+
+            plt.title(f'Comparative {titles[metric]}')
+            plt.xlabel('Epoch')
+            plt.ylabel(metric)
+            plt.legend(loc="lower right")
+            plt.tight_layout()
+            plt.savefig(os.path.join(self.save_path, f'{metric}_comparison_first_{max_epochs}_epochs.png'))
+            plt.show()
+
 def one_analysis() -> None:
     analysis = ComparativeAnalysis(path_to_results='data/results/week10/YOLOv10_baseline')
     analysis.plot_comparative_graphs()
@@ -409,6 +491,24 @@ def three_analysis() -> None:
                                            save = 'data/results/week10/YOLOv10_baseline')
     comparative.plot_comparisons()
 
+def n_analysis() -> None:
+    plt.style.use(['science', 'ieee', 'grid', 'std-colors'])
+    plt.rcParams.update({'figure.dpi': '100'})
+    comparative = ComparativeResultsModels(model_paths=["./data/results/week9/Baseline_Unbalanced_All_Labels/results.csv",
+                                                        './data/results/week9/Augmented_full_train/results.csv',
+                                                        "./data/results/week11/ateroesclerosis_tuning14/results.csv",
+                                                        './data/results/week10/YOLOv9_baseline/results.csv',
+                                                        './data/results/week10/YOLOv10_baseline/results.csv'], 
+                                            model_names=["Baseline (No Augment)", "Baseline (Augment)", "Our YOLOv8 config", "YOLOv9", "YOLOv10"],
+                                            plot_styles=[{'linestyle': '--', 'color': 'black', 'alpha': 1, 'linewidth': 1.7},  
+                                                         {'linestyle': '-.', 'color': 'dimgrey', 'alpha': .4, 'linewidth': 1},
+                                                         {'linestyle': '-', 'color': 'red', 'alpha': 1, 'linewidth': 1.7}, 
+                                                         {'linestyle': '-', 'color': 'blue', 'alpha': .4, 'linewidth': 1},
+                                                         {'linestyle': '-', 'color': 'green', 'alpha': .4, 'linewidth': 1}],
+                                                         
+                                            save_path="./data/results/week11")
+    comparative.plot_comparisons()
+
 if __name__ == '__main__':
     
-    three_analysis()
+    n_analysis()
