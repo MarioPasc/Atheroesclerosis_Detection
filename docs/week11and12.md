@@ -42,4 +42,4 @@ Como podemos observar, el experimento, que fue ejecutado durante 80 épocas para
 |    0.566628 | 0.313018 | 0.44365  |   0.256359 |        0.9  |
 |    0.561895 | 0.30886  | 0.434345 |   0.253599 |        0.95 |
 
-El valor más bajo de todos, 0.55, ha obtenido el mejor resultado en Recall, sin embargo, el recall medio más alto ha sido obtenido por el anterior valor probado, 0.6, es por esto que estos valores serán seleccionados para el ajuste bayesiano. 
+El valor más bajo de todos, 0.55, ha obtenido el mejor resultado en Recall, sin embargo, el recall medio más alto ha sido obtenido por el anterior valor probado, 0.6, es por esto que estos valores serán seleccionados para el ajuste bayesiano.

@@ -42,10 +42,10 @@ class Detection_YOLOv8:
             'freeze': None,
             'plots': True,
             'optimizer': 'Adam',
-            'iou': 0.5, # YOLO lo tiene por defecto en .7, lo dejaremos en .5 como estándar
-            'lr0': 0.01,
+            'iou': 0.5, 
+            'lr0': 7.364500901696627e-06,
             'lrf': 0.01,
-            'momentum': 0.937,
+            'momentum': 0.6391760944005742,
             'weight_decay': 0.0005,
             'warmup_epochs': 3,
             'warmup_momentum': 0.8,

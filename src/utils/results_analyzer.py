@@ -428,6 +428,31 @@ class ComparativeResultsModels:
         data.rename(columns=rename_map, inplace=True)
         return data.sort_values(by='epoch')
 
+    def calculate_improvement(self, model1_name: str, model2_name: str) -> float:
+        """
+        Calculate the percentage improvement of mAP50-95 between two models.
+
+        :param model1_name: Name of the first model (baseline).
+        :param model2_name: Name of the second model (improved).
+        :return: Percentage improvement from model1 to model2.
+        """
+        # Ensure both model names exist
+        if model1_name not in self.model_names or model2_name not in self.model_names:
+            raise ValueError("Both model names must be in the list of model names.")
+
+        # Get the indices of the models in the model_names list
+        model1_idx = self.model_names.index(model1_name)
+        model2_idx = self.model_names.index(model2_name)
+
+        # Get the last available mAP50-95 for both models
+        model1_last_map50_95 = self.model_data[model1_idx]['map_50_95'].iloc[-1]
+        model2_last_map50_95 = self.model_data[model2_idx]['map_50_95'].iloc[-1]
+
+        # Calculate percentage improvement
+        improvement = ((model2_last_map50_95 - model1_last_map50_95) / model1_last_map50_95) * 100
+
+        return improvement
+
     def plot_comparisons(self):
         """
         Generates individual plots for precision, recall, mAP@50, and mAP@50-95 metrics.
@@ -442,7 +467,7 @@ class ComparativeResultsModels:
         }
 
         # Limit to the first 80 epochs for each model
-        max_epochs = 80
+        max_epochs = 100
 
         for metric in metrics:
             plt.figure(figsize=(10, 6))
@@ -466,11 +491,12 @@ class ComparativeResultsModels:
 
             plt.title(f'Comparative {titles[metric]}')
             plt.xlabel('Epoch')
-            plt.ylabel(metric)
+            plt.ylabel(titles[metric])
             plt.legend(loc="lower right")
             plt.tight_layout()
             plt.savefig(os.path.join(self.save_path, f'{metric}_comparison_first_{max_epochs}_epochs.png'))
             plt.show()
+
 
 def one_analysis() -> None:
     analysis = ComparativeAnalysis(path_to_results='data/results/week10/YOLOv10_baseline')
@@ -496,18 +522,26 @@ def n_analysis() -> None:
     plt.rcParams.update({'figure.dpi': '100'})
     comparative = ComparativeResultsModels(model_paths=["./data/results/week9/Baseline_Unbalanced_All_Labels/results.csv",
                                                         './data/results/week9/Augmented_full_train/results.csv',
-                                                        "./data/results/week11/ateroesclerosis_tuning14/results.csv",
+                                                        "/home/mariopasc/Python/Projects/Deteccion_Asteroesclerosis/data/results/week11/YOLOv8_tuning_ga2/runs/detect/ateroesclerosis_tuning35/results.csv",
                                                         './data/results/week10/YOLOv9_baseline/results.csv',
-                                                        './data/results/week10/YOLOv10_baseline/results.csv'], 
-                                            model_names=["Baseline (No Augment)", "Baseline (Augment)", "Our YOLOv8 config", "YOLOv9", "YOLOv10"],
+                                                        './data/results/week10/YOLOv10_baseline/results.csv',
+                                                        './data/results/week12/runs/detect/ateroesclerosis_tuning29/results.csv'], 
+                                            model_names=["YOLOv8 Baseline (No Augment)", " YOLOv8 Baseline (Augment)", "Our YOLOv8 config (last week)", 
+                                                         "YOLOv9 base config (Augment)", "YOLOv10 base config (Augment)", "Our YOLOv8 config (actual)"],
                                             plot_styles=[{'linestyle': '--', 'color': 'black', 'alpha': 1, 'linewidth': 1.7},  
                                                          {'linestyle': '-.', 'color': 'dimgrey', 'alpha': .4, 'linewidth': 1},
-                                                         {'linestyle': '-', 'color': 'red', 'alpha': 1, 'linewidth': 1.7}, 
+                                                         {'linestyle': '-', 'color': 'darkred', 'alpha': .7, 'linewidth': 1.7}, 
                                                          {'linestyle': '-', 'color': 'blue', 'alpha': .4, 'linewidth': 1},
-                                                         {'linestyle': '-', 'color': 'green', 'alpha': .4, 'linewidth': 1}],
+                                                         {'linestyle': '-', 'color': 'green', 'alpha': .4, 'linewidth': 1},
+                                                         {'linestyle': '-', 'color': 'red', 'alpha': 1, 'linewidth': 1.7}],
                                                          
-                                            save_path="./data/results/week11")
+                                            save_path="./data/results/week12/Results")
     comparative.plot_comparisons()
+
+    # Example usage of the improvement calculation
+    improvement = comparative.calculate_improvement("Our YOLOv8 config (last week)", "Our YOLOv8 config (actual)")
+
+    print(f"Percentage improvement in mAP50-95: {improvement:.2f}%")
 
 if __name__ == '__main__':
     

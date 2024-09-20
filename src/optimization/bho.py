@@ -234,14 +234,18 @@ def main() -> None:
     # Define the hyperparameter search space
     hyperparameters = {
         ('lr0', 'log'): [5e-6, 1e-5],
-        ('momentum', 'uniform'): [0.45, 0.65]
+        ('momentum', 'uniform'): [0.55, 0.7],
+        ('box', 'uniform'): [8, 8.7], 
+        ('cls', 'uniform'): [0.5, 0.7], 
+        ('dfl', 'uniform'): [1.1, 1.5],
+        ('lrf', 'log'): [0.007, 0.01]
     }
 
     # Instantiate the BHOYOLO class
-    bho_yolo = BHOYOLO(model=model, hyperparameters=hyperparameters, data=data, epochs=80)
+    bho_yolo = BHOYOLO(model=model, hyperparameters=hyperparameters, data=data, epochs=100)
 
     # Run optimization and save visualizations
-    bho_yolo.optimize(n_trials=15, save_plots=True)  # Adjust the number of trials as needed
+    bho_yolo.optimize(n_trials=6, save_plots=True)  # Adjust the number of trials as needed
 
     send_email(subject="BHO Finished", body="BHO training has finished", to_email="mario.pg02@gmail.com")
 
